@@ -1,29 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@400;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
+    /* Typography */
+    --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
+    
+    /* Core Brand Colors */
+    --background: #FAFCFC;
+    --foreground: #1E3A4C;
+    --card: #ffffff;
+    --card-foreground: #1E3A4C;
+    --popover: #ffffff;
+    --popover-foreground: #1E3A4C;
+    
+    /* Primary: Soft Teal/Mint */
+    --primary: #4ECDC4;
+    --primary-foreground: #ffffff;
+    --primary-light: #7FE5DE;
+    --primary-dark: #3AAFA9;
+    
+    /* Secondary: Navy */
+    --secondary: #F0F9F9;
+    --secondary-foreground: #1E3A4C;
+    
+    /* Muted tones */
+    --muted: #E8F5F4;
+    --muted-foreground: #5A6C7D;
+    
+    /* Accent: Warm Coral */
+    --accent: #FF6B6B;
+    --accent-foreground: #ffffff;
+    --accent-light: #FF9999;
+    
+    /* Accent 2: Golden */
+    --accent-2: #FFB347;
+    --accent-2-foreground: #1E3A4C;
+    
+    /* Supporting Colors */
+    --success: #52C6A3;
+    --success-foreground: #ffffff;
+    --warning: #FFB347;
+    --warning-foreground: #1E3A4C;
+    --destructive: #E85D75;
+    --destructive-foreground: #ffffff;
+    --info: #5DADE2;
+    --info-foreground: #ffffff;
+    
+    /* UI Elements */
+    --border: #D4E8E7;
+    --input: #D4E8E7;
+    --input-background: #ffffff;
+    --ring: #4ECDC4;
+    
+    /* Border radius */
+    --radius: 1rem;
   }
 
   .dark {
@@ -55,7 +90,25 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-body);
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+
+  button {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Brand Shadows */
+.shadow-warm {
+  box-shadow: 0 4px 20px rgba(78, 205, 196, 0.12);
+}
+
+.shadow-warm-lg {
+  box-shadow: 0 8px 30px rgba(78, 205, 196, 0.18);
 }
 
 
