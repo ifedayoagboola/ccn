@@ -1,4 +1,5 @@
 import { useQuery, type UseQueryOptions } from '@tanstack/react-query'
+import type { SupabaseClient } from '@supabase/supabase-js'
 import { getSupabaseClient, hasSupabaseConfig } from '@/lib/supabase/client'
 
 export function useSupabaseQuery<TData = any>(
@@ -13,7 +14,7 @@ export function useSupabaseQuery<TData = any>(
   return useQuery<TData>({
     queryKey,
     queryFn: async () => {
-      const supabase = getSupabaseClient()
+      const supabase = getSupabaseClient() as SupabaseClient<any, any, any>
       const { data, error } = await supabase.from(table).select('*')
       if (error) throw error
       return data as TData

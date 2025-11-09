@@ -114,7 +114,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
 
                   <div className="relative h-48 overflow-hidden rounded-3xl">
                     <ImageWithFallback
-                      src="/assets/remote11.jpeg"
+                      src="/assets/remote4.jpeg"
                       alt="Workshop with African nurses"
                       fill
                       className="object-cover object-top"
