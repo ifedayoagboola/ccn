@@ -1,8 +1,7 @@
 "use client";
 
+import Image from 'next/image';
 import { useState } from 'react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { LOGO_PATH } from '@/utils/constants';
 
 interface LogoProps {
   className?: string;
@@ -11,33 +10,31 @@ interface LogoProps {
   variant?: 'default' | 'white' | 'dark';
 }
 
-export function Logo({ className = '', height = 48, width, variant = 'default' }: LogoProps) {
-  const [showSVG, setShowSVG] = useState(false);
-  
-  // Try to load the image, fallback to SVG if it fails
-  const handleImageError = () => {
-    setShowSVG(true);
-  };
-  
-  if (showSVG) {
+export function Logo({ className = '', height = 64, width, variant = 'default' }: LogoProps) {
+  const [useSvgFallback, setUseSvgFallback] = useState(false);
+  const logoPath = '/assets/logo.png';
+  const aspectRatio = 1; // square logo asset
+  const resolvedWidth = width ?? Math.round(height * aspectRatio);
+
+  if (useSvgFallback) {
     return (
       <div className={`flex items-center ${className}`}>
         <LogoSVG height={height} className={variant === 'white' ? 'brightness-0 invert' : ''} />
       </div>
     );
   }
-  
+
   return (
     <div className={`flex items-center ${className}`}>
-      <div style={{ height: `${height}px`, width: width ? `${width}px` : 'auto' }}>
-        <img
-          src={LOGO_PATH}
-          alt="Counter-Cultural Nurses"
-          className={`h-full w-auto object-contain ${variant === 'white' ? 'brightness-0 invert' : ''}`}
-          style={{ height: `${height}px`, width: 'auto' }}
-          onError={handleImageError}
-        />
-      </div>
+      <Image
+        src={logoPath}
+        alt="Counter-Cultural Nurses"
+        height={height}
+        width={resolvedWidth}
+        className={`h-auto w-auto ${variant === 'white' ? 'brightness-0 invert' : ''}`}
+        priority
+        onError={() => setUseSvgFallback(true)}
+      />
     </div>
   );
 }

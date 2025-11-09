@@ -13,42 +13,44 @@ import {
   SelectValue,
 } from './ui/select';
 import { Mail, Sparkles, CheckCircle2, Users, TrendingUp, Zap } from 'lucide-react';
-import { AFRICAN_COUNTRIES } from '@/utils/constants';
-import { submitWaitlist } from '@/lib/api';
-import type { NewsletterSectionProps, WaitlistFormData } from '@/types';
+
+interface NewsletterSectionProps {
+  variant?: 'default' | 'compact' | 'feature';
+  className?: string;
+}
+
+interface FormData {
+  name: string;
+  email: string;
+  country: string;
+}
 
 export function NewsletterSection({ variant = 'default', className = '' }: NewsletterSectionProps) {
-  const [formData, setFormData] = useState<WaitlistFormData>({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     country: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleChange = (field: keyof WaitlistFormData, value: string) => {
+  const handleChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-    setError(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
 
     if (!formData.name || !formData.email || !formData.country) {
-      setError('Please fill in all fields');
+      alert('Please fill in all fields');
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      await submitWaitlist({
-        ...formData,
-        source: 'newsletter-section',
-        timestamp: new Date().toISOString(),
-      });
+      // TODO: Integrate with backend API
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
       setIsSuccess(true);
       
@@ -58,13 +60,21 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
         setIsSuccess(false);
       }, 5000);
 
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Something went wrong. Please try again later.';
-      setError(message);
+    } catch (error) {
+      console.error('Newsletter signup error:', error);
+      alert('Something went wrong. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const africanCountries = [
+    'Nigeria', 'Ghana', 'Kenya', 'South Africa', 'Egypt', 
+    'Tanzania', 'Uganda', 'Rwanda', 'Ethiopia', 'Zimbabwe',
+    'Zambia', 'Cameroon', 'Senegal', 'Côte d\'Ivoire', 'Morocco',
+    'Tunisia', 'Algeria', 'Botswana', 'Namibia', 'Mozambique',
+    'Other Africa', 'Outside Africa'
+  ];
 
   const stats = [
     { icon: Users, value: '1,000+', label: 'Community Members' },
@@ -74,7 +84,7 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
 
   if (variant === 'feature') {
     return (
-      <section className={`py-20 lg:py-28 bg-gradient-to-br from-primary via-primary to-[#9D4E7F] text-white relative overflow-hidden ${className}`}>
+      <section className={`py-20 lg:py-28 bg-gradient-to-br from-primary via-primary/95 to-accent-2 text-white relative overflow-hidden ${className}`}>
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-96 h-96 bg-accent rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-2 rounded-full blur-3xl" />
@@ -157,7 +167,7 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
                           <SelectValue placeholder="Select your country" />
                         </SelectTrigger>
                         <SelectContent>
-                          {AFRICAN_COUNTRIES.map((country) => (
+                          {africanCountries.map((country) => (
                             <SelectItem key={country} value={country}>
                               {country}
                             </SelectItem>
@@ -165,12 +175,6 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
                         </SelectContent>
                       </Select>
                     </div>
-
-                    {error && (
-                      <div className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md p-3">
-                        {error}
-                      </div>
-                    )}
 
                     <Button 
                       type="submit" 
@@ -203,7 +207,7 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
               <div className="inline-flex p-6 rounded-full bg-white/10 backdrop-blur-sm mb-6">
                 <CheckCircle2 className="h-16 w-16 text-accent" />
               </div>
-              <h2 className="mb-4 text-white text-4xl font-bold">You're In! 🎉</h2>
+              <h2 className="mb-4 text-white text-4xl font-bold">You&apos;re In! 🎉</h2>
               <p className="text-xl text-white/95 mb-8 leading-relaxed">
                 Welcome to the Counter-Cultural Nurses community! Watch your inbox for next steps and exclusive opportunities.
               </p>
@@ -269,7 +273,7 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
                     <SelectValue placeholder="Select your country" />
                   </SelectTrigger>
                   <SelectContent>
-                    {AFRICAN_COUNTRIES.map((country) => (
+                    {africanCountries.map((country) => (
                       <SelectItem key={country} value={country}>
                         {country}
                       </SelectItem>
@@ -277,12 +281,6 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
                   </SelectContent>
                 </Select>
               </div>
-
-              {error && (
-                <div className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md p-3">
-                  {error}
-                </div>
-              )}
 
               <Button 
                 type="submit" 
@@ -313,7 +311,7 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
             <div className="inline-flex p-4 rounded-full bg-accent/10 mb-4">
               <CheckCircle2 className="h-12 w-12 text-accent" />
             </div>
-            <h3 className="mb-3 text-foreground text-2xl font-bold">You're In! 🎉</h3>
+            <h3 className="mb-3 text-foreground text-2xl font-bold">You&apos;re In! 🎉</h3>
             <p className="text-muted-foreground leading-relaxed mb-6">
               Welcome to the Counter-Cultural Nurses community! Watch your inbox for next steps and exclusive opportunities.
             </p>

@@ -6,58 +6,48 @@
 
 @layer base {
   :root {
-    /* Typography */
     --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
     --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
-    
-    /* Core Brand Colors */
-    --background: #FAFCFC;
-    --foreground: #1E3A4C;
+
+    --background: #fef7f6;
+    --foreground: #29120f;
     --card: #ffffff;
-    --card-foreground: #1E3A4C;
+    --card-foreground: #321512;
     --popover: #ffffff;
-    --popover-foreground: #1E3A4C;
-    
-    /* Primary: Soft Teal/Mint */
-    --primary: #4ECDC4;
+    --popover-foreground: #321512;
+
+    --primary: #c03631;
     --primary-foreground: #ffffff;
-    --primary-light: #7FE5DE;
-    --primary-dark: #3AAFA9;
-    
-    /* Secondary: Navy */
-    --secondary: #F0F9F9;
-    --secondary-foreground: #1E3A4C;
-    
-    /* Muted tones */
-    --muted: #E8F5F4;
-    --muted-foreground: #5A6C7D;
-    
-    /* Accent: Warm Coral */
-    --accent: #FF6B6B;
+    --primary-light: #d85550;
+    --primary-dark: #8b2421;
+
+    --secondary: #fce5df;
+    --secondary-foreground: #432421;
+
+    --muted: #f6d9d2;
+    --muted-foreground: #70514b;
+
+    --accent: #e26a4d;
     --accent-foreground: #ffffff;
-    --accent-light: #FF9999;
-    
-    /* Accent 2: Golden */
-    --accent-2: #FFB347;
-    --accent-2-foreground: #1E3A4C;
-    
-    /* Supporting Colors */
-    --success: #52C6A3;
+    --accent-light: #f18a6f;
+
+    --accent-2: #7a2f2a;
+    --accent-2-foreground: #ffffff;
+
+    --success: #4f9c7a;
     --success-foreground: #ffffff;
-    --warning: #FFB347;
-    --warning-foreground: #1E3A4C;
-    --destructive: #E85D75;
+    --warning: #f6a75c;
+    --warning-foreground: #3d241c;
+    --destructive: #b72f3a;
     --destructive-foreground: #ffffff;
-    --info: #5DADE2;
-    --info-foreground: #ffffff;
-    
-    /* UI Elements */
-    --border: #D4E8E7;
-    --input: #D4E8E7;
+    --info: #cc7f66;
+    --info-foreground: #2f1815;
+
+    --border: #f1cfc8;
+    --input: #f1cfc8;
     --input-background: #ffffff;
-    --ring: #4ECDC4;
-    
-    /* Border radius */
+    --ring: #c03631;
+
     --radius: 1rem;
   }
 

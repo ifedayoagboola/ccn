@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import {
@@ -12,30 +13,73 @@ import {
 } from './ui/dropdown-menu';
 import { LogOut, Settings, User as UserIcon, ShieldCheck } from 'lucide-react';
 import { Logo } from './Logo';
-import { LOGGED_IN_NAV_ITEMS, PUBLIC_NAV_ITEMS, ROUTES } from '@/utils/constants';
-import { containerClass } from '@/lib/layout-utils';
-import type { HeaderProps } from '@/types';
+
+interface User {
+  name: string;
+  email: string;
+  role: string;
+  isAdmin?: boolean;
+}
+
+interface HeaderProps {
+  user?: User | null;
+  currentPage?: string;
+  onNavigate?: (page: string) => void;
+  onLogout?: () => void;
+  isAdmin?: boolean;
+}
+
+const SECTION_LINKS: Record<string, string> = {
+  landing: '#home',
+  about: '#about',
+  programs: '#programs',
+  membership: '#membership',
+  'community-public': '#community',
+  events: '#community',
+  blog: '#contact',
+  partnerships: '#contact',
+  contact: '#contact',
+};
 
 export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: HeaderProps) {
+  const loggedInNavItems = [
+    { id: 'dashboard', label: 'Dashboard' },
+    { id: 'courses', label: 'Courses' },
+    { id: 'jobs', label: 'Jobs' },
+    { id: 'community', label: 'Community' },
+    { id: 'events', label: 'Events' },
+  ];
+
+  const publicNavItems = [
+    { id: 'about', label: 'About' },
+    { id: 'programs', label: 'Programs' },
+    { id: 'membership', label: 'Membership' },
+    { id: 'community-public', label: 'Community' },
+    { id: 'events', label: 'Events' },
+    { id: 'partnerships', label: 'Partners' },
+    { id: 'blog', label: 'Blog' },
+    { id: 'contact', label: 'Contact' },
+  ];
 
   return (
     <header className="border-b-2 border-border bg-card sticky top-0 z-50 backdrop-blur-sm bg-white/95">
-      <div className={containerClass}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center gap-12">
-            <button
-              onClick={() => onNavigate?.(user ? ROUTES.DASHBOARD : ROUTES.LANDING)}
+            <Link
+              href="#home"
               className="hover:opacity-80 transition-opacity"
+              onClick={() => onNavigate?.('landing')}
             >
-              <Logo height={48} />
-            </button>
+              <Logo height={72} />
+            </Link>
 
             {user ? (
               <nav className="hidden md:flex gap-2">
-                {LOGGED_IN_NAV_ITEMS.map((item) => (
+                {loggedInNavItems.map((item) => (
                   <button
                     key={item.id}
-                    onClick={() => onNavigate?.(item.id as any)}
+                    onClick={() => onNavigate?.(item.id)}
                     className={`px-5 py-2.5 rounded-xl font-semibold transition-all ${
                       currentPage === item.id
                         ? 'bg-primary text-primary-foreground shadow-warm'
@@ -48,25 +92,27 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
               </nav>
             ) : (
               <nav className="hidden md:flex items-center gap-8">
-                {PUBLIC_NAV_ITEMS.map((item, index) => (
-                  item.href ? (
+                {publicNavItems.map((item) => {
+                  const href = SECTION_LINKS[item.id];
+                  return href ? (
                     <a
-                      key={index}
-                      href={item.href}
+                      key={item.id}
+                      href={href}
                       className="text-foreground hover:text-primary transition-colors"
+                      onClick={() => onNavigate?.(item.id)}
                     >
                       {item.label}
                     </a>
                   ) : (
                     <button
-                      key={index}
-                      onClick={() => onNavigate?.(item.route as any)}
+                      key={item.id}
+                      onClick={() => onNavigate?.(item.id)}
                       className="text-foreground hover:text-primary transition-colors"
                     >
                       {item.label}
                     </button>
-                  )
-                ))}
+                  );
+                })}
               </nav>
             )}
           </div>
@@ -76,10 +122,10 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
               <>
                 {isAdmin && (
                   <Button
-                    variant={currentPage === ROUTES.ADMIN ? 'default' : 'ghost'}
+                    variant={currentPage === 'admin' ? 'default' : 'ghost'}
                     size="sm"
-                    onClick={() => onNavigate?.(ROUTES.ADMIN)}
-                    className={currentPage === ROUTES.ADMIN ? 'bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-xl' : 'font-semibold rounded-xl'}
+                    onClick={() => onNavigate?.('admin')}
+                    className={currentPage === 'admin' ? 'bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-xl' : 'font-semibold rounded-xl'}
                   >
                     <ShieldCheck className="h-4 w-4 mr-2" />
                     Admin
@@ -127,7 +173,7 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
               </>
             ) : (
               <Button 
-                onClick={() => onNavigate?.(ROUTES.JOIN)}
+                onClick={() => onNavigate?.('join')}
                 className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold rounded-xl px-6"
               >
                 Join the Waitlist

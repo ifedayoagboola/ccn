@@ -1,31 +1,37 @@
 "use client";
 
+import { useCallback } from 'react';
 import { Header } from '@/components/Header';
 import { LandingPage } from '@/components/LandingPage';
-import { useState } from 'react';
+
+const SECTION_ANCHORS: Record<string, string> = {
+  landing: 'home',
+  about: 'about',
+  programs: 'programs',
+  membership: 'membership',
+  'community-public': 'community',
+  events: 'community',
+  blog: 'contact',
+  partnerships: 'contact',
+  contact: 'contact',
+};
 
 export default function Home() {
-  const [currentPage, setCurrentPage] = useState('landing');
+  const handleNavigate = useCallback((page: string) => {
+    const targetId = SECTION_ANCHORS[page];
+    if (targetId) {
+      document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
 
-  const handleNavigate = (page: string) => {
-    setCurrentPage(page);
-  };
-
-  const handleJoinClick = () => {
-    // TODO: Navigate to join/signup page
+  const handleJoinClick = useCallback(() => {
     alert('Join functionality coming soon!');
-  };
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
-      <Header 
-        currentPage={currentPage}
-        onNavigate={handleNavigate}
-      />
-      <LandingPage 
-        onJoinClick={handleJoinClick}
-        onNavigate={handleNavigate}
-      />
+      <Header onNavigate={handleNavigate} />
+      <LandingPage onJoinClick={handleJoinClick} onNavigate={handleNavigate} />
     </div>
   );
 }

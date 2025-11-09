@@ -79,7 +79,6 @@ This document outlines the architecture and structure of the CCN Next.js applica
 All global providers are wrapped in `AppProviders` component:
 - React Query for server state
 - Auth Context for authentication
-- App Context for application state
 
 ### 2. Supabase Integration
 Three client instances for different contexts:
@@ -94,7 +93,6 @@ Three client instances for different contexts:
 
 ### 4. Context API Usage
 - `AuthContext` - Handles authentication state
-- `AppContext` - Extensible for app-wide state
 
 ### 5. Type Safety
 - Full TypeScript coverage
@@ -130,7 +128,7 @@ Three client instances for different contexts:
 ### Adding New Context
 1. Create file in `contexts/` directory
 2. Export provider and hook
-3. Add to `AppProviders` wrapper
+3. Add it to `AppProviders` if necessary
 
 ### Adding New Hooks
 1. Create file in `hooks/` directory

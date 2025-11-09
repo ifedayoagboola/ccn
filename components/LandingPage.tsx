@@ -19,10 +19,11 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { Logo } from './Logo';
-import { sectionContainerClass, sectionWrapperClass } from '@/lib/layout-utils';
-import { ROUTES } from '@/utils/constants';
-import { cn } from '@/lib/utils';
-import type { LandingPageProps } from '@/types';
+
+interface LandingPageProps {
+  onJoinClick: () => void;
+  onNavigate?: (page: string) => void;
+}
 
 export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
   const [email, setEmail] = useState('');
@@ -41,16 +42,21 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
       <section id="home" className="relative overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <ImageWithFallback
-            src="https://images.unsplash.com/photo-1643246681510-b917ea41b893?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwbnVyc2UlMjBzbWlsaW5nJTIwaG9zcGl0YWx8ZW58MXx8fHwxNzYyMzY0MDAwfDA&ixlib=rb-4.1.0&q=80&w=1080"
-            alt="African nurses smiling"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/50" />
+          <div className="relative h-full w-full">
+            <ImageWithFallback
+              src="https://images.unsplash.com/photo-1643246681510-b917ea41b893?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwbnVyc2UlMjBzbWlsaW5nJTIwaG9zcGl0YWx8ZW58MXx8fHwxNzYyMzY0MDAwfDA&ixlib=rb-4.1.0&q=80&w=1080"
+              alt="African nurses smiling"
+              fill
+              className="object-cover"
+              priority
+              sizes="100vw"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/75 to-accent/60" />
         </div>
 
         {/* Content */}
-        <div className={cn("relative z-10", sectionContainerClass(), "py-32 sm:py-40 lg:py-48")}>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 sm:py-40 lg:py-48">
           <div className="max-w-3xl">
             <h1 className="mb-6 text-white text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
               Helping African Nurses Soar Beyond the Bedside.
@@ -80,16 +86,20 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
       </section>
 
       {/* Section 2: The Problem & Our Why */}
-      <section id="about" className={cn(sectionWrapperClass(), "bg-background")}>
-        <div className={sectionContainerClass()}>
+      <section id="about" className="py-20 lg:py-28 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: Image */}
             <div className="order-2 lg:order-1">
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1592393532405-fb1f165c4a1f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoZWFsdGhjYXJlJTIwd29ya2VyJTIwcmVmbGVjdGl2ZSUyMHBvcnRyYWl0fGVufDF8fHx8MTc2MjM2NDAwM3ww&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Thoughtful nurse"
-                className="w-full h-[500px] object-cover rounded-2xl shadow-2xl"
-              />
+              <div className="relative h-[500px] rounded-2xl shadow-2xl overflow-hidden">
+                <ImageWithFallback
+                  src="https://images.unsplash.com/photo-1592393532405-fb1f165c4a1f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoZWFsdGhjYXJlJTIwd29ya2VyJTIwcmVmbGVjdGl2ZSUyMHBvcnRyYWl0fGVufDF8fHx8MTc2MjM2NDAwM3ww&ixlib=rb-4.1.0&q=80&w=1080"
+                  alt="Thoughtful nurse"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                />
+              </div>
             </div>
 
             {/* Right: Story */}
@@ -98,27 +108,27 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
               
               <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  Across Africa, nurses are the backbone of healthcare — compassionate, skilled, and deeply committed. Yet too often, they find themselves underpaid, overworked, and limited by systems that don't recognize their full potential.
+                  Across Africa, nurses are the backbone of healthcare — compassionate, skilled, and deeply committed. Yet too often, they find themselves underpaid, overworked, and limited by systems that don&apos;t recognize their full potential.
                 </p>
                 
                 <p>
-                  We've heard the stories: nurses working multiple shifts just to make ends meet, professionals with incredible skills but no pathway to use them beyond the hospital walls, dreams deferred because opportunities feel out of reach.
+                  We&apos;ve heard the stories: nurses working multiple shifts just to make ends meet, professionals with incredible skills but no pathway to use them beyond the hospital walls, dreams deferred because opportunities feel out of reach.
                 </p>
                 
                 <p>
-                  But it doesn't have to be this way.
+                  But it doesn&apos;t have to be this way.
                 </p>
               </div>
 
               {/* Highlighted Quote */}
               <div className="bg-secondary border-l-4 border-accent p-6 rounded-lg">
                 <p className="text-xl text-foreground italic">
-                  "We believe nurses deserve more — more freedom, more opportunity, and more joy in their work."
+                  &ldquo;We believe nurses deserve more — more freedom, more opportunity, and more joy in their work.&rdquo;
                 </p>
               </div>
 
               <p className="text-lg text-muted-foreground">
-                That's why we created Counter-Cultural Nurses: a movement dedicated to helping nurses break free from traditional constraints and build careers that honor their passion while providing financial stability and personal fulfillment.
+                That&apos;s why we created Counter-Cultural Nurses: a movement dedicated to helping nurses break free from traditional constraints and build careers that honor their passion while providing financial stability and personal fulfillment.
               </p>
             </div>
           </div>
@@ -126,8 +136,8 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
       </section>
 
       {/* Section 3: What We Do */}
-      <section id="programs" className={cn(sectionWrapperClass(), "bg-white")}>
-        <div className={sectionContainerClass()}>
+      <section id="programs" className="py-20 lg:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="mb-4 text-foreground text-4xl font-bold">What We Do</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -161,12 +171,12 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
               </div>
               <h3 className="mb-4 text-foreground text-2xl font-bold">Community & Mentorship</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Connect with ambitious nurses across Africa who understand your journey. Get mentorship from those who've successfully transitioned to remote and digital careers.
+                Connect with ambitious nurses across Africa who understand your journey. Get mentorship from those who&apos;ve successfully transitioned to remote and digital careers.
               </p>
               <Button 
                 variant="ghost" 
                 className="mt-6 text-accent hover:text-accent/80 p-0 h-auto"
-                onClick={() => onNavigate?.(ROUTES.COMMUNITY_PUBLIC)}
+                onClick={() => onNavigate?.('community-public')}
               >
                 Join the Community
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -201,8 +211,8 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
       </section>
 
       {/* Section 4: Our Impact */}
-      <section className={cn(sectionWrapperClass(), "bg-gradient-to-br from-primary/5 to-accent/5")}>
-        <div className={sectionContainerClass()}>
+      <section className="py-20 lg:py-28 bg-gradient-to-br from-primary/10 via-accent/10 to-accent-2/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="mb-4 text-foreground text-4xl font-bold">Our Impact</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -264,8 +274,8 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
       </section>
 
       {/* Section 5: Featured Program */}
-      <section id="membership" className={cn(sectionWrapperClass(), "bg-white")}>
-        <div className={sectionContainerClass()}>
+      <section id="membership" className="py-20 lg:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: Content */}
             <div className="space-y-6">
@@ -292,7 +302,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   <CheckCircle className="h-6 w-6 text-accent flex-shrink-0 mt-1" />
                   <div>
                     <p className="font-semibold text-foreground">Learn from Experts</p>
-                    <p className="text-muted-foreground">Live workshops with nurses who've successfully made the transition.</p>
+                  <p className="text-muted-foreground">Live workshops with nurses who&apos;ve successfully made the transition.</p>
                   </div>
                 </div>
                 
@@ -306,7 +316,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button onClick={() => onNavigate?.(ROUTES.EVENTS)} size="lg" className="bg-accent hover:bg-accent/90">
+                <Button onClick={() => onNavigate?.('events')} size="lg" className="bg-accent hover:bg-accent/90">
                   Join the Challenge
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -314,7 +324,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   variant="outline" 
                   size="lg" 
                   className="border-2"
-                  onClick={() => onNavigate?.(ROUTES.EVENTS)}
+                  onClick={() => onNavigate?.('events')}
                 >
                   View All Events
                 </Button>
@@ -323,19 +333,23 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
 
             {/* Right: Image */}
             <div className="order-first lg:order-last">
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1708461860854-e3a0604f65ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxudXJzZXMlMjB6b29tJTIwd29ya3Nob3AlMjBtZWV0aW5nfGVufDF8fHx8MTc2MjM2NDAwMXww&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Nurses in online workshop"
-                className="w-full h-[500px] object-cover rounded-2xl shadow-2xl"
-              />
+              <div className="relative h-[500px] rounded-2xl shadow-2xl overflow-hidden">
+                <ImageWithFallback
+                  src="https://images.unsplash.com/photo-1708461860854-e3a0604f65ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxudXJzZXMlMjB6b29tJTIwd29ya3Nob3AlMjBtZWV0aW5nfGVufDF8fHx8MTc2MjM2NDAwMXww&ixlib=rb-4.1.0&q=80&w=1080"
+                  alt="Nurses in online workshop"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Section 6: Testimonials */}
-      <section id="community" className={cn(sectionWrapperClass(), "bg-background")}>
-        <div className={sectionContainerClass()}>
+      <section id="community" className="py-20 lg:py-28 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="mb-4 text-foreground text-4xl font-bold">Faces of Change</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -350,9 +364,11 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                 <ImageWithFallback
                   src="https://images.unsplash.com/photo-1755189118414-14c8dacdb082?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBudXJzZSUyMHBvcnRyYWl0fGVufDF8fHx8MTc2MjM2NDAwNHww&ixlib=rb-4.1.0&q=80&w=1080"
                   alt="Amaka O."
-                  className="w-20 h-20 rounded-full object-cover mb-4"
+                  width={80}
+                  height={80}
+                  className="h-20 w-20 rounded-full object-cover mb-4"
                 />
-                <div className="text-4xl text-accent mb-4">"</div>
+                <div className="text-4xl text-accent mb-4">&ldquo;</div>
                 <p className="text-muted-foreground leading-relaxed mb-6">
                   CCN gave me the confidence to pursue telehealth. I went from exhausting 12-hour shifts to working remotely with international clients. My income doubled, and I finally have time for my family.
                 </p>
@@ -369,9 +385,11 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                 <ImageWithFallback
                   src="https://images.unsplash.com/photo-1676552055618-22ec8cde399a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxudXJzZSUyMGxhcHRvcCUyMGRpZ2l0YWwlMjB3b3JrfGVufDF8fHx8MTc2MjM2NDAwMHww&ixlib=rb-4.1.0&q=80&w=1080"
                   alt="Chidi E."
-                  className="w-20 h-20 rounded-full object-cover mb-4"
+                  width={80}
+                  height={80}
+                  className="h-20 w-20 rounded-full object-cover mb-4"
                 />
-                <div className="text-4xl text-accent mb-4">"</div>
+                <div className="text-4xl text-accent mb-4">&ldquo;</div>
                 <p className="text-muted-foreground leading-relaxed mb-6">
                   The Portfolio Challenge was a game-changer. I built my first professional website, connected with mentors, and landed a remote medical writing gig — all within three months.
                 </p>
@@ -388,9 +406,11 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                 <ImageWithFallback
                   src="https://images.unsplash.com/photo-1643246681510-b917ea41b893?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwbnVyc2UlMjBzbWlsaW5nJTIwaG9zcGl0YWx8ZW58MXx8fHwxNzYyMzY0MDAwfDA&ixlib=rb-4.1.0&q=80&w=1080"
                   alt="Folake A."
-                  className="w-20 h-20 rounded-full object-cover mb-4"
+                  width={80}
+                  height={80}
+                  className="h-20 w-20 rounded-full object-cover mb-4"
                 />
-                <div className="text-4xl text-accent mb-4">"</div>
+                <div className="text-4xl text-accent mb-4">&ldquo;</div>
                 <p className="text-muted-foreground leading-relaxed mb-6">
                   I thought digital skills were only for tech people. CCN showed me how my nursing expertise translates beautifully to online healthcare education. Now I teach and earn on my own schedule.
                 </p>
@@ -412,15 +432,15 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
       </section>
 
       {/* Section 7: Join the Movement */}
-      <section className={cn(sectionWrapperClass(), "bg-gradient-to-br from-primary via-primary to-[#9D4E7F] text-white relative overflow-hidden")}>
+      <section className="py-20 lg:py-28 bg-gradient-to-br from-primary via-primary/95 to-accent-2 text-white relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-2/20 rounded-full blur-3xl" />
         
-        <div className={cn("relative max-w-4xl mx-auto text-center", sectionContainerClass())}>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="mb-6 text-white text-4xl font-bold">Join the Movement</h2>
           <p className="mb-12 text-2xl text-white/95 max-w-3xl mx-auto leading-relaxed">
-            You've cared for others — now it's time to care for your future.
+            You&apos;ve cared for others — now it&apos;s time to care for your future.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -454,12 +474,12 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
 
       {/* Footer */}
       <footer id="contact" className="bg-foreground text-white py-16">
-        <div className={sectionContainerClass()}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             {/* Column 1: Brand */}
             <div className="md:col-span-1">
-              <div className="mb-4">
-                <Logo height={48} variant="white" />
+              <div className="mb-6">
+                <Logo height={80} variant="white" />
               </div>
               <p className="text-white/70 leading-relaxed">
                 Empowering African nurses to soar beyond the bedside.
@@ -482,7 +502,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                 </li>
                 <li>
                   <button 
-                    onClick={() => onNavigate?.(ROUTES.BLOG)}
+                    onClick={() => onNavigate?.('blog')}
                     className="text-white/70 hover:text-white transition-colors"
                   >
                     Blog
@@ -490,7 +510,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                 </li>
                 <li>
                   <button 
-                    onClick={() => onNavigate?.(ROUTES.PARTNERSHIPS)}
+                    onClick={() => onNavigate?.('partnerships')}
                     className="text-white/70 hover:text-white transition-colors"
                   >
                     Partnerships
@@ -498,7 +518,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                 </li>
                 <li>
                   <button 
-                    onClick={() => onNavigate?.(ROUTES.CONTACT)}
+                    onClick={() => onNavigate?.('contact')}
                     className="text-white/70 hover:text-white transition-colors"
                   >
                     Contact
