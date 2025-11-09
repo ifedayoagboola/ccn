@@ -1,9 +1,17 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Playfair_Display, Manrope } from 'next/font/google'
 import './globals.css'
 import { AppProviders } from '@/components/providers/app-providers'
 
-const inter = Inter({ subsets: ['latin'] })
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-display',
+})
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-body',
+})
 
 export const metadata: Metadata = {
   title: 'CCN',
@@ -17,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${playfair.variable} ${manrope.variable}`}>
         <AppProviders>
           {children}
         </AppProviders>
