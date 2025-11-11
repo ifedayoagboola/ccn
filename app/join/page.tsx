@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { NewsletterSection } from "@/components/NewsletterSection";
 import { cn } from "@/lib/utils";
+import { Footer } from "@/components/Footer";
 
 const STEPS = [
   {
@@ -48,6 +49,7 @@ export default function JoinPage() {
         <ApplicationForm />
         <SupportSection />
         <NewsletterSection variant="feature" />
+        <Footer />
       </main>
     </div>
   );
@@ -58,7 +60,7 @@ function HeroSection() {
     <section className="bg-[#eef4f2] py-24 sm:py-32">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)] lg:items-start">
-          <div className="space-y-8">
+          <div className="space-y-8 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-4 py-1.5 text-xs uppercase tracking-[0.26em] text-primary">
               Join Counter Cultural Nurses
             </div>
@@ -69,7 +71,7 @@ function HeroSection() {
               One form covers both paths: the Portfolio Power-Up Challenge and discounted partner courses. Pick what fits, share your goals, and we respond within a day.
             </p>
 
-            <div className="space-y-4 rounded-[28px] border border-primary/15 bg-white p-6 text-sm text-foreground/70">
+            <div className="space-y-4 rounded-[28px] border border-primary/15 bg-white p-6 text-left text-sm text-foreground/70">
               <div className="flex items-center gap-3">
                 <Star className="h-5 w-5 text-primary" />
                 <span>Portfolio sprint · Shape your story, build proof, and land remote work.</span>
@@ -102,7 +104,7 @@ function HeroSection() {
                   <li>• A short note about your goals</li>
                 </ul>
               </div>
-              <div className="rounded-3xl border border-primary/10 bg-white/90 p-6 text-sm text-foreground/70">
+              <div className="rounded-3xl border border-primary/10 bg-white/90 p-6 text-center text-sm text-foreground/70 sm:text-left">
                 <div className="flex items-center gap-3">
                   <MessageCircle className="h-5 w-5 text-primary" />
                   <span>Prefer a call? Message us and a mentor will respond within 24 hours.</span>
@@ -110,7 +112,7 @@ function HeroSection() {
                 <Button
                   asChild
                   variant="secondary"
-                  className="mt-4 rounded-full border border-primary/15 bg-primary/10 px-5 text-sm font-semibold text-primary"
+                  className="mt-4 w-full rounded-full border border-primary/15 bg-primary/10 px-5 text-sm font-semibold text-primary sm:w-auto"
                 >
                   <Link href="https://wa.me/2348000000000" target="_blank">
                     Message on WhatsApp
@@ -333,7 +335,7 @@ function ApplicationForm() {
             </p>
             <Button
               type="submit"
-              className="rounded-full bg-primary px-8 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark"
+              className="w-full rounded-full bg-primary px-8 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark sm:w-auto"
               disabled={isSubmitting}
             >
               {isSubmitting ? (

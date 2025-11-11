@@ -6,6 +6,7 @@ import { ArrowRight, Building2, ClipboardCheck, Globe2, Sparkles, MapPin, Rocket
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { NewsletterSection } from "@/components/NewsletterSection";
+import { Footer } from "@/components/Footer";
 
 const BENEFITS = [
   {
@@ -50,6 +51,7 @@ export default function PartnershipsPage() {
         <CaseStudySection />
         <EngagementSection />
         <NewsletterSection variant="feature" />
+        <Footer />
       </main>
     </div>
   );
@@ -58,8 +60,8 @@ export default function PartnershipsPage() {
 function HeroSection() {
   return (
     <section className="bg-[#fff3ec] py-24 sm:py-32">
-      <div className="max-w-6xl mx-auto grid gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] lg:px-8 lg:items-center">
-        <div className="space-y-8">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] lg:px-8 lg:items-center">
+        <div className="space-y-8 text-center lg:text-left">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-4 py-1.5 text-xs uppercase tracking-[0.26em] text-primary">
             Partnerships & hiring
           </div>
@@ -69,14 +71,14 @@ function HeroSection() {
           <p className="text-lg leading-relaxed text-foreground/75">
             We partner with hospitals, startups, NGOs, and health tech companies to design programmes, source talent, and deliver measurable outcomes for African nurses.
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button asChild className="rounded-full bg-primary px-7 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
+            <Button asChild className="w-full rounded-full bg-primary px-7 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark sm:w-auto">
               <Link href="#contact">Book a discovery call</Link>
             </Button>
             <Button
               asChild
               variant="outline"
-              className="rounded-full border-primary/30 px-7 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10"
+              className="w-full rounded-full border-primary/30 px-7 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10 sm:w-auto"
             >
               <Link href="#case-studies">See success stories</Link>
             </Button>

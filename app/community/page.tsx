@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { NewsletterSection } from "@/components/NewsletterSection";
 import { ImageWithFallback } from "@/components/figma/ImageWithFallback";
+import { Footer } from "@/components/Footer";
 
 const PILLARS = [
   {
@@ -62,6 +63,7 @@ export default function CommunityPage() {
         <ChannelSection />
         <PartnerInviteSection />
         <NewsletterSection variant="feature" />
+        <Footer />
       </main>
     </div>
   );
@@ -70,8 +72,8 @@ export default function CommunityPage() {
 function HeroSection() {
   return (
     <section className="bg-[#f3f0ff] py-24 sm:py-32">
-      <div className="max-w-6xl mx-auto grid gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.5fr)_minmax(0,0.5fr)] lg:px-8">
-        <div className="space-y-8">
+      <div className="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.5fr)_minmax(0,0.5fr)] lg:px-8">
+        <div className="space-y-8 text-center lg:text-left">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#6e4bd9]/20 bg-white px-4 py-1.5 text-xs uppercase tracking-[0.26em] text-[#5a39c6]">
             CCN community
           </div>
@@ -81,25 +83,21 @@ function HeroSection() {
           <p className="text-lg leading-relaxed text-foreground/75">
             Join a living studio of Nigerian nurses building remote careers. You’ll get mentors, pods, and weekly programming designed to keep you moving forward.
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button asChild className="rounded-full bg-[#5a39c6] px-7 text-sm font-semibold uppercase tracking-[0.22em] text-white hover:bg-[#4c2faf]">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
+            <Button asChild className="w-full rounded-full bg-[#5a39c6] px-7 text-sm font-semibold uppercase tracking-[0.22em] text-white hover:bg-[#4c2faf] sm:w-auto">
               <Link href="/join">
                 Join the community
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="rounded-full border-[#5a39c6]/30 px-7 text-sm font-semibold uppercase tracking-[0.2em] text-[#5a39c6] hover:border-[#5a39c6] hover:bg-[#5a39c6]/10"
-            >
+            <Button asChild variant="outline" className="w-full rounded-full border-[#5a39c6]/30 px-7 text-sm font-semibold uppercase tracking-[0.2em] text-[#5a39c6] hover:border-[#5a39c6] hover:bg-[#5a39c6]/10 sm:w-auto">
               <Link href="/events">See weekly schedule</Link>
             </Button>
           </div>
         </div>
 
         <div className="relative overflow-hidden rounded-[36px] border border-[#5a39c6]/20 bg-white p-8 shadow-[0_40px_80px_-50px_rgba(56,31,136,0.35)]">
-          <div className="grid gap-6 text-sm text-foreground/70">
+          <div className="grid gap-6 text-left text-sm text-foreground/70">
             <div className="flex items-start gap-3">
               <Users className="mt-1 h-5 w-5 text-[#5a39c6]" />
               <p>3 signature pods: Telehealth, Content & Communication, and Digital Ventures. Each pod has its own lead mentor.</p>

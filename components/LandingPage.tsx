@@ -12,14 +12,10 @@ import {
   Target, 
   ArrowRight, 
   CheckCircle, 
-  Linkedin, 
-  Instagram, 
-  Youtube,
-  Mail,
   ExternalLink
 } from 'lucide-react';
-import { useState } from 'react';
 import { Logo } from './Logo';
+import { Footer } from './Footer';
 
 interface LandingPageProps {
   onJoinClick: () => void;
@@ -27,15 +23,6 @@ interface LandingPageProps {
 }
 
 export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
-  const [email, setEmail] = useState('');
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Newsletter signup
-    alert('Thank you for subscribing!');
-    setEmail('');
-  };
-
   return (
     <div className="min-h-screen bg-white">
 
@@ -629,114 +616,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
 
       {/* Newsletter/Waitlist Section */}
       <NewsletterSection variant="feature" />
-
-      {/* Footer */}
-      <footer id="contact" className="bg-foreground text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-            {/* Column 1: Brand */}
-            <div className="md:col-span-1">
-              <div className="mb-6">
-                <Logo height={80} variant="white" />
-              </div>
-              <p className="text-white/70 leading-relaxed">
-                Empowering African nurses to soar beyond the bedside.
-              </p>
-            </div>
-
-            {/* Column 2: Quick Links */}
-            <div>
-              <h4 className="mb-4 text-white font-semibold">Quick Links</h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link href="/programmes" className="text-white/70 hover:text-white transition-colors">
-                    Programs
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/join" className="text-white/70 hover:text-white transition-colors">
-                    Membership
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/stories" className="text-white/70 hover:text-white transition-colors">
-                    Stories
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/partnerships" className="text-white/70 hover:text-white transition-colors">
-                    Partnerships
-                  </Link>
-                </li>
-                <li>
-                  <a href="#contact" className="text-white/70 hover:text-white transition-colors">
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Column 3: Newsletter */}
-            <div className="md:col-span-2">
-              <h4 className="mb-4 text-white font-semibold">Stay Connected</h4>
-              <p className="text-white/70 mb-4">
-                Get weekly opportunities straight to your inbox.
-              </p>
-              <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                />
-                <Button type="submit" className="bg-accent hover:bg-accent/90 flex-shrink-0">
-                  <Mail className="h-4 w-4" />
-                </Button>
-              </form>
-            </div>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="pt-8 border-t border-white/10">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-              {/* Copyright */}
-              <p className="text-white/60 text-sm">
-                © 2024 Counter-Cultural Nurses. All rights reserved.
-              </p>
-
-              {/* Social Icons */}
-              <div className="flex items-center gap-4">
-                <a 
-                  href="https://linkedin.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-white/70 hover:text-white transition-colors"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </a>
-                <a 
-                  href="https://instagram.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-white/70 hover:text-white transition-colors"
-                >
-                  <Instagram className="h-5 w-5" />
-                </a>
-                <a 
-                  href="https://youtube.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-white/70 hover:text-white transition-colors"
-                >
-                  <Youtube className="h-5 w-5" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

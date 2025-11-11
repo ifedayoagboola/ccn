@@ -6,6 +6,7 @@ import { ArrowRight, BookCopy, Download, FileText, Mic, Search } from "lucide-re
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { NewsletterSection } from "@/components/NewsletterSection";
+import { Footer } from "@/components/Footer";
 
 const GUIDES = [
   {
@@ -65,6 +66,7 @@ export default function ResourcesPage() {
         <AudioSection />
         <PathwaySection />
         <NewsletterSection variant="feature" />
+        <Footer />
       </main>
     </div>
   );
@@ -75,7 +77,7 @@ function HeroSection() {
     <section className="bg-[#eef6f5] py-24 sm:py-32">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] lg:items-center">
-          <div className="space-y-8">
+          <div className="space-y-8 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white px-4 py-1.5 text-xs uppercase tracking-[0.26em] text-primary">
               Resource library
             </div>
@@ -85,8 +87,8 @@ function HeroSection() {
             <p className="text-lg leading-relaxed text-foreground/75">
               Dive into the materials our community uses to pitch, price, and pivot. Updated monthly with fresh insight from mentors and partners.
             </p>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Button asChild className="rounded-full bg-primary px-7 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
+              <Button asChild className="w-full rounded-full bg-primary px-7 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark sm:w-auto">
                 <Link href="/join">
                   Join to unlock more
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -95,7 +97,7 @@ function HeroSection() {
               <Button
                 asChild
                 variant="outline"
-                className="rounded-full border-primary/30 px-7 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10"
+                className="w-full rounded-full border-primary/30 px-7 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10 sm:w-auto"
               >
                 <Link href="#guides">See latest templates</Link>
               </Button>
