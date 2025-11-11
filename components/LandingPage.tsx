@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Input } from './ui/input';
@@ -58,7 +59,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   Learn new skills, earn better, and still remain a proud nurse.
                 </h1>
                 <p className="text-lg leading-relaxed text-foreground/75 sm:text-xl">
-                  We take you by the hand—showing simple lessons, real examples, and friendly support so you can start a
+                  We take you by the hand, showing simple lessons, real examples, and friendly support so you can start a
                   remote job, build a side business, or grow into a bigger role.
                 </p>
               </div>
@@ -68,9 +69,12 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   onClick={onJoinClick}
                   size="lg"
                   className="h-14 rounded-full bg-primary px-8 text-base font-semibold tracking-wide text-primary-foreground shadow-[0_22px_40px_-24px_rgba(192,54,49,0.55)] hover:bg-primary-dark"
+                  asChild
                 >
-                  Join the waitlist
-                  <ArrowRight className="ml-3 h-5 w-5" />
+                  <Link href="/join">
+                    Join the waitlist
+                    <ArrowRight className="ml-3 h-5 w-5" />
+                  </Link>
                 </Button>
                 <Button
                   variant="outline"
@@ -231,9 +235,9 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
             <Button
               variant="outline"
               className="self-start rounded-full border-primary/25 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10"
-              onClick={onJoinClick}
+              asChild
             >
-              View full program guide
+              <Link href="/programmes">View full program guide</Link>
             </Button>
           </div>
 
@@ -271,8 +275,9 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   <Button
                     className="mt-2 h-12 rounded-full bg-primary px-6 text-sm font-semibold tracking-wide text-primary-foreground hover:bg-primary-dark"
                     onClick={onJoinClick}
+                    asChild
                   >
-                    Join this class
+                    <Link href="/join">Join this class</Link>
                   </Button>
                 </div>
               </div>
@@ -285,7 +290,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   label: '01',
                   title: 'Digital skill residencies',
                   description:
-                    'Short trainings in telehealth support, writing, community management, and more—using real examples from partners.',
+                    'Short trainings in telehealth support, writing, community management, and more, using real examples from partners.',
                   cta: 'See training list',
                 },
                 {
@@ -317,13 +322,13 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   </div>
                   <h3 className="text-2xl font-semibold text-foreground">{item.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-foreground/70">{item.description}</p>
-                  <button
+                  <Link
+                    href="/programmes#partner-courses"
                     className="mt-6 inline-flex items-center text-sm font-semibold text-primary transition hover:text-primary-dark"
-                    onClick={() => onNavigate?.('programs')}
                   >
                     {item.cta}
                     <ArrowRight className="ml-2 h-4 w-4" />
-                  </button>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -434,18 +439,21 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
 
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Button
-                  onClick={() => onNavigate?.('events')}
                   className="h-12 rounded-full bg-primary px-6 text-sm font-semibold uppercase tracking-[0.2em] text-primary-foreground hover:bg-primary-dark"
+                  onClick={onJoinClick}
+                  asChild
                 >
-                  Join the challenge
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <Link href="/join">
+                    Join the challenge
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
                 <Button
                   variant="outline"
                   className="h-12 rounded-full border-primary/25 px-6 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10"
-                  onClick={() => onNavigate?.('events')}
+                  asChild
                 >
-                  Course calendar
+                  <Link href="/events">Course calendar</Link>
                 </Button>
               </div>
             </div>
@@ -557,10 +565,12 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
               variant="outline"
               size="lg"
               className="rounded-full border-primary/25 px-8 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10"
-              onClick={() => onNavigate?.('community-public')}
+              asChild
             >
-              Meet the community
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <Link href="/community">
+                Meet the community
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
             </Button>
           </div>
         </div>
@@ -581,17 +591,22 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
             <Button
               onClick={onJoinClick}
               className="h-12 rounded-full bg-primary px-8 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark"
+              asChild
             >
-              Join the waitlist
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <Link href="/join">
+                Join the waitlist
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
             <Button
               variant="outline"
               className="h-12 rounded-full border-primary/25 px-8 text-sm font-semibold uppercase tracking-[0.22em] text-primary hover:border-primary hover:bg-primary/10"
-              onClick={() => onNavigate?.('partnerships')}
+              asChild
             >
-              Partner with us
-              <ExternalLink className="ml-2 h-4 w-4" />
+              <Link href="/partnerships">
+                Partner with us
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
           </div>
 
@@ -634,38 +649,29 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
               <h4 className="mb-4 text-white font-semibold">Quick Links</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="#programs" className="text-white/70 hover:text-white transition-colors">
+                  <Link href="/programmes" className="text-white/70 hover:text-white transition-colors">
                     Programs
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#membership" className="text-white/70 hover:text-white transition-colors">
+                  <Link href="/join" className="text-white/70 hover:text-white transition-colors">
                     Membership
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <button 
-                    onClick={() => onNavigate?.('blog')}
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
-                    Blog
-                  </button>
+                  <Link href="/stories" className="text-white/70 hover:text-white transition-colors">
+                    Stories
+                  </Link>
                 </li>
                 <li>
-                  <button 
-                    onClick={() => onNavigate?.('partnerships')}
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
+                  <Link href="/partnerships" className="text-white/70 hover:text-white transition-colors">
                     Partnerships
-                  </button>
+                  </Link>
                 </li>
                 <li>
-                  <button 
-                    onClick={() => onNavigate?.('contact')}
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
+                  <a href="#contact" className="text-white/70 hover:text-white transition-colors">
                     Contact
-                  </button>
+                  </a>
                 </li>
               </ul>
             </div>
