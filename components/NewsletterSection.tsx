@@ -101,7 +101,7 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
                   Get simple guides, job alerts, and invites to live sessions.
                 </h2>
                 <p className="mx-auto max-w-3xl text-base leading-relaxed text-foreground/70">
-                  Join free and receive meaningful updates only when we have something useful to share—new classes, job leads,
+                  Join free and receive meaningful updates only when we have something useful to share: new classes, job leads,
                   or mentor chats.
                 </p>
               </div>
