@@ -18,8 +18,27 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { NewsletterSection } from "@/components/NewsletterSection";
-import { cn } from "@/lib/utils";
 import { Footer } from "@/components/Footer";
+import { cn } from "@/lib/utils";
+import { useForm, UseFormRegisterReturn } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+
+const joinSchema = z.object({
+  interest: z.enum(["sprint", "partner", "both"]),
+  name: z.string().min(2, "Please enter your full name"),
+  email: z.string().email("Enter a valid email address"),
+  phone: z.string().min(7, "Enter a valid phone number"),
+  country: z.string().min(2, "Let us know where you live"),
+  yearsExperience: z.string().min(1, "Add your experience"),
+  currentRole: z.string().optional(),
+  goals: z.string().min(10, "Tell us about your goals"),
+  availability: z.string().min(3, "Share your availability"),
+  whatsapp: z.string().optional(),
+});
+
+type JoinFormValues = z.infer<typeof joinSchema>;
 
 const STEPS = [
   {
@@ -160,33 +179,50 @@ function StepsSection() {
 }
 
 function ApplicationForm() {
-  const [interest, setInterest] = useState<"sprint" | "partner" | "both">("sprint");
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    country: "",
-    yearsExperience: "",
-    currentRole: "",
-    goals: "",
-    availability: "",
-    whatsapp: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChange = (key: keyof typeof formData, value: string) => {
-    setFormData((prev) => ({ ...prev, [key]: value }));
-  };
+  const form = useForm<JoinFormValues>({
+    resolver: zodResolver(joinSchema),
+    defaultValues: {
+      interest: "sprint",
+      name: "",
+      email: "",
+      phone: "",
+      country: "",
+      yearsExperience: "",
+      currentRole: "",
+      goals: "",
+      availability: "",
+      whatsapp: "",
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // TODO connect to Supabase / CRM
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
+  const interest = form.watch("interest");
+
+  const mutation = useMutation<JoinFormValues, Error, JoinFormValues>({
+    mutationFn: async (values) => {
+      // TODO connect to Supabase / CRM
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      return values;
+    },
+  });
+
+  const onSubmit = form.handleSubmit(async (values) => {
+    await mutation.mutateAsync(values);
     setIsSubmitted(true);
-  };
+    form.reset({
+      interest: values.interest,
+      name: "",
+      email: "",
+      phone: "",
+      country: "",
+      yearsExperience: "",
+      currentRole: "",
+      goals: "",
+      availability: "",
+      whatsapp: "",
+    });
+  });
 
   if (isSubmitted) {
     return (
@@ -236,7 +272,7 @@ function ApplicationForm() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-12 grid gap-10">
+        <form onSubmit={onSubmit} className="mt-12 grid gap-10">
           <div className="grid gap-4 rounded-[32px] border border-primary/12 bg-background/80 p-8 shadow-[0_32px_72px_-52px_rgba(41,18,15,0.5)]">
             <p className="text-sm font-semibold text-primary">Which option interests you right now?</p>
             <div className="grid gap-3 sm:grid-cols-3">
@@ -248,7 +284,7 @@ function ApplicationForm() {
                 <button
                   key={option.value}
                   type="button"
-                  onClick={() => setInterest(option.value as typeof interest)}
+                  onClick={() => form.setValue("interest", option.value as JoinFormValues["interest"], { shouldValidate: true })}
                   className={cn(
                     "rounded-2xl border px-4 py-3 text-sm font-semibold transition",
                     interest === option.value
@@ -264,67 +300,67 @@ function ApplicationForm() {
 
           <div className="grid gap-6 rounded-[32px] border border-primary/12 bg-white/90 p-8 shadow-[0_32px_72px_-50px_rgba(41,18,15,0.5)]">
             <div className="grid gap-6 sm:grid-cols-2">
-              <Field
+              <FormField
                 label="Full name"
                 required
                 placeholder="Enter your full name"
-                value={formData.name}
-                onChange={(value) => handleChange("name", value)}
+                registration={form.register("name")}
+                error={form.formState.errors.name?.message}
               />
-              <Field
+              <FormField
                 label="Email address"
                 type="email"
                 required
                 placeholder="your.email@example.com"
-                value={formData.email}
-                onChange={(value) => handleChange("email", value)}
+                registration={form.register("email")}
+                error={form.formState.errors.email?.message}
               />
-              <Field
+              <FormField
                 label="Phone number"
                 required
                 placeholder="Include country code"
-                value={formData.phone}
-                onChange={(value) => handleChange("phone", value)}
+                registration={form.register("phone")}
+                error={form.formState.errors.phone?.message}
               />
-              <Field
+              <FormField
                 label="Country"
                 required
                 placeholder="Where do you live?"
-                value={formData.country}
-                onChange={(value) => handleChange("country", value)}
+                registration={form.register("country")}
+                error={form.formState.errors.country?.message}
               />
-              <Field
+              <FormField
                 label="Years of experience"
                 required
                 placeholder="e.g. 3 years in paediatric nursing"
-                value={formData.yearsExperience}
-                onChange={(value) => handleChange("yearsExperience", value)}
+                registration={form.register("yearsExperience")}
+                error={form.formState.errors.yearsExperience?.message}
               />
-              <Field
+              <FormField
                 label="Current role"
                 placeholder="Ward sister, community nurse, etc."
-                value={formData.currentRole}
-                onChange={(value) => handleChange("currentRole", value)}
+                registration={form.register("currentRole")}
+                error={form.formState.errors.currentRole?.message}
               />
             </div>
 
             <TextareaField
               label="What do you hope to achieve in the next six months?"
               placeholder="Tell us about your career goals, income targets, or areas you'd like support with."
-              value={formData.goals}
-              onChange={(value) => handleChange("goals", value)}
+              registration={form.register("goals")}
+              error={form.formState.errors.goals?.message}
             />
             <TextareaField
               label="How many hours can you invest each week?"
               placeholder="e.g. 4 hours during weekends, 1 hour each weekday"
-              value={formData.availability}
-              onChange={(value) => handleChange("availability", value)}
+              registration={form.register("availability")}
+              error={form.formState.errors.availability?.message}
             />
-            <Field
+            <FormField
               label="Preferred WhatsApp number"
               placeholder="We'll send reminders here"
-              value={formData.whatsapp}
-              onChange={(value) => handleChange("whatsapp", value)}
+              registration={form.register("whatsapp")}
+              error={form.formState.errors.whatsapp?.message}
             />
           </div>
 
@@ -336,9 +372,9 @@ function ApplicationForm() {
             <Button
               type="submit"
               className="w-full rounded-full bg-primary px-8 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark sm:w-auto"
-              disabled={isSubmitting}
+              disabled={mutation.isPending}
             >
-              {isSubmitting ? (
+              {mutation.isPending ? (
                 <span className="flex items-center gap-2">
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   Sending…
@@ -357,17 +393,17 @@ function ApplicationForm() {
   );
 }
 
-function Field({
+function FormField({
   label,
-  value,
-  onChange,
+  registration,
+  error,
   placeholder,
   type = "text",
   required = false,
 }: {
   label: string;
-  value: string;
-  onChange: (value: string) => void;
+  registration: UseFormRegisterReturn;
+  error?: string;
   placeholder?: string;
   type?: string;
   required?: boolean;
@@ -379,37 +415,43 @@ function Field({
         {required ? <span className="text-primary"> *</span> : null}
       </span>
       <Input
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         type={type}
         required={required}
-        className="rounded-2xl border border-primary/20 bg-white/90"
+        className={cn(
+          "rounded-2xl border border-primary/20 bg-white/90",
+          error && "border-destructive"
+        )}
+        {...registration}
       />
+      {error ? <span className="text-xs text-destructive">{error}</span> : null}
     </label>
   );
 }
 
 function TextareaField({
   label,
-  value,
-  onChange,
+  registration,
+  error,
   placeholder,
 }: {
   label: string;
-  value: string;
-  onChange: (value: string) => void;
+  registration: UseFormRegisterReturn;
+  error?: string;
   placeholder?: string;
 }) {
   return (
     <label className="grid gap-2 text-sm text-foreground/70">
       <span className="font-semibold text-foreground">{label}</span>
       <Textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="min-h-[120px] rounded-2xl border border-primary/20 bg-white/90"
+        className={cn(
+          "min-h-[120px] rounded-2xl border border-primary/20 bg-white/90",
+          error && "border-destructive"
+        )}
+        {...registration}
       />
+      {error ? <span className="text-xs text-destructive">{error}</span> : null}
     </label>
   );
 }

@@ -13,60 +13,51 @@ import {
   SelectValue,
 } from './ui/select';
 import { Mail, Sparkles, CheckCircle2, Users, TrendingUp, Zap } from 'lucide-react';
+import { useForm, Controller } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { cn } from '@/lib/utils';
 
 interface NewsletterSectionProps {
   variant?: 'default' | 'compact' | 'feature';
   className?: string;
 }
 
-interface FormData {
-  name: string;
-  email: string;
-  country: string;
-}
+const newsletterSchema = z.object({
+  name: z.string().min(2, 'Please enter your full name'),
+  email: z.string().email('Enter a valid email'),
+  country: z.string().min(2, 'Select your country'),
+});
+
+type NewsletterFormValues = z.infer<typeof newsletterSchema>;
 
 export function NewsletterSection({ variant = 'default', className = '' }: NewsletterSectionProps) {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    country: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleChange = (field: keyof FormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
+  const form = useForm<NewsletterFormValues>({
+    resolver: zodResolver(newsletterSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      country: '',
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const mutation = useMutation<NewsletterFormValues, Error, NewsletterFormValues>({
+    mutationFn: async (values) => {
+      // TODO integrate with backend API
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return values;
+    },
+  });
 
-    if (!formData.name || !formData.email || !formData.country) {
-      alert('Please fill in all fields');
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      // TODO: Integrate with backend API
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setIsSuccess(true);
-      
-      // Reset after 5 seconds
-      setTimeout(() => {
-        setFormData({ name: '', email: '', country: '' });
-        setIsSuccess(false);
-      }, 5000);
-
-    } catch (error) {
-      console.error('Newsletter signup error:', error);
-      alert('Something went wrong. Please try again later.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const handleSubmit = form.handleSubmit(async (values) => {
+    await mutation.mutateAsync(values);
+    setIsSuccess(true);
+    form.reset();
+    setTimeout(() => setIsSuccess(false), 5000);
+  });
 
   const africanCountries = [
     'Nigeria', 'Ghana', 'Kenya', 'South Africa', 'Egypt', 
@@ -117,11 +108,12 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
                             id="feature-name"
                             type="text"
                             placeholder="Enter your full name"
-                            value={formData.name}
-                            onChange={(e) => handleChange('name', e.target.value)}
-                            required
-                            className="rounded-2xl border-primary/25 bg-white/90"
+                            className={cnInput(form.formState.errors.name)}
+                            {...form.register('name')}
                           />
+                          {form.formState.errors.name ? (
+                            <span className="text-xs text-destructive">{form.formState.errors.name.message}</span>
+                          ) : null}
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="feature-email">Email Address *</Label>
@@ -129,36 +121,46 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
                             id="feature-email"
                             type="email"
                             placeholder="your.email@example.com"
-                            value={formData.email}
-                            onChange={(e) => handleChange('email', e.target.value)}
-                            required
-                            className="rounded-2xl border-primary/25 bg-white/90"
+                            className={cnInput(form.formState.errors.email)}
+                            {...form.register('email')}
                           />
+                          {form.formState.errors.email ? (
+                            <span className="text-xs text-destructive">{form.formState.errors.email.message}</span>
+                          ) : null}
                         </div>
                       </div>
 
                       <div className="space-y-2">
                         <Label htmlFor="feature-country">Country *</Label>
-                        <Select value={formData.country} onValueChange={(value) => handleChange('country', value)}>
-                          <SelectTrigger className="rounded-2xl border-primary/25 bg-white/90">
-                            <SelectValue placeholder="Select your country" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {africanCountries.map((country) => (
-                              <SelectItem key={country} value={country}>
-                                {country}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <Controller
+                          control={form.control}
+                          name="country"
+                          render={({ field }) => (
+                            <Select value={field.value} onValueChange={field.onChange}>
+                              <SelectTrigger className={cnInput(form.formState.errors.country)}>
+                                <SelectValue placeholder="Select your country" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {africanCountries.map((country) => (
+                                  <SelectItem key={country} value={country}>
+                                    {country}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          )}
+                        />
+                        {form.formState.errors.country ? (
+                          <span className="text-xs text-destructive">{form.formState.errors.country.message}</span>
+                        ) : null}
                       </div>
 
                       <Button
                         type="submit"
-                        disabled={isSubmitting}
+                        disabled={mutation.isPending}
                         className="mt-4 h-12 w-full rounded-full bg-primary px-6 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark"
                       >
-                        {isSubmitting ? (
+                        {mutation.isPending ? (
                           <>
                             <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                             Joining...
@@ -252,11 +254,12 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
                   id="default-name"
                   type="text"
                   placeholder="Enter your full name"
-                  value={formData.name}
-                  onChange={(e) => handleChange('name', e.target.value)}
-                  required
-                  className="border-2"
+                  className={cn("border-2", form.formState.errors.name && "border-destructive")}
+                  {...form.register('name')}
                 />
+                {form.formState.errors.name ? (
+                  <span className="text-xs text-destructive">{form.formState.errors.name.message}</span>
+                ) : null}
               </div>
 
               <div className="space-y-2">
@@ -265,39 +268,46 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
                   id="default-email"
                   type="email"
                   placeholder="your.email@example.com"
-                  value={formData.email}
-                  onChange={(e) => handleChange('email', e.target.value)}
-                  required
-                  className="border-2"
+                  className={cn("border-2", form.formState.errors.email && "border-destructive")}
+                  {...form.register('email')}
                 />
+                {form.formState.errors.email ? (
+                  <span className="text-xs text-destructive">{form.formState.errors.email.message}</span>
+                ) : null}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="default-country">Country *</Label>
-                <Select 
-                  value={formData.country} 
-                  onValueChange={(value) => handleChange('country', value)}
-                >
-                  <SelectTrigger className="border-2">
-                    <SelectValue placeholder="Select your country" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {africanCountries.map((country) => (
-                      <SelectItem key={country} value={country}>
-                        {country}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Controller
+                  control={form.control}
+                  name="country"
+                  render={({ field }) => (
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger className={cn("border-2", form.formState.errors.country && "border-destructive")}> 
+                        <SelectValue placeholder="Select your country" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {africanCountries.map((country) => (
+                          <SelectItem key={country} value={country}>
+                            {country}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                {form.formState.errors.country ? (
+                  <span className="text-xs text-destructive">{form.formState.errors.country.message}</span>
+                ) : null}
               </div>
 
               <Button 
                 type="submit" 
-                disabled={isSubmitting}
+                disabled={mutation.isPending}
                 className="w-full bg-primary hover:bg-primary/90"
                 size="lg"
               >
-                {isSubmitting ? (
+                {mutation.isPending ? (
                   <>
                     <div className="animate-spin mr-2 h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
                     Joining...
@@ -328,6 +338,13 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
         )}
       </div>
     </Card>
+  );
+}
+
+function cnInput(error?: { message?: string }) {
+  return cn(
+    "rounded-2xl border-primary/25 bg-white/90",
+    error && "border-destructive"
   );
 }
 
