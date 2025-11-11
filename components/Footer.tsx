@@ -1,21 +1,40 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { Mail, Linkedin, Instagram, Youtube } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { cn } from "@/lib/utils";
+
+const footerSignupSchema = z.object({
+  email: z.string().email("Enter a valid email"),
+});
+
+type FooterSignupValues = z.infer<typeof footerSignupSchema>;
 
 export function Footer() {
-  const [email, setEmail] = useState("");
+  const form = useForm<FooterSignupValues>({
+    resolver: zodResolver(footerSignupSchema),
+    defaultValues: { email: "" },
+  });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // TODO connect to backend list
-    alert("Thank you for subscribing!");
-    setEmail("");
-  };
+  const mutation = useMutation<FooterSignupValues, Error, FooterSignupValues>({
+    mutationFn: async (values) => {
+      // TODO connect to backend list
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      return values;
+    },
+  });
+
+  const handleSubmit = form.handleSubmit(async (values) => {
+    await mutation.mutateAsync(values);
+    form.reset();
+  });
 
   const FOOTER_LINKS = [
     { label: "About", href: "/#about" },
@@ -61,16 +80,27 @@ export function Footer() {
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row">
               <Input
                 type="email"
-                required
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
                 placeholder="Enter your email"
-                className="bg-white/10 text-white placeholder:text-white/50 sm:flex-1"
+                className={cn(
+                  "bg-white/10 text-white placeholder:text-white/50 sm:flex-1",
+                  form.formState.errors.email && "border border-destructive"
+                )}
+                {...form.register("email")}
               />
-              <Button type="submit" className="bg-accent hover:bg-accent/90 sm:w-auto">
-                <Mail className="h-4 w-4" />
+              <Button type="submit" className="bg-accent hover:bg-accent/90 sm:w-auto" disabled={mutation.isPending}>
+                {mutation.isPending ? (
+                  <span className="flex items-center gap-2">
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                    Sending...
+                  </span>
+                ) : (
+                  <Mail className="h-4 w-4" />
+                )}
               </Button>
             </form>
+            {form.formState.errors.email ? (
+              <span className="text-xs text-white/70">{form.formState.errors.email.message}</span>
+            ) : null}
           </div>
         </div>
 
