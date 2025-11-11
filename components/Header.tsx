@@ -63,16 +63,47 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   useEffect(() => {
-    setActiveSection(null);
+    if (pathname !== '/') {
+      setActiveSection(null);
+      return;
+    }
+
+    const sectionIds = NAV_ITEMS.filter((item) => item.type === 'anchor').map((item) => item.href.replace('#', ''));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        threshold: 0.6,
+      }
+    );
+
+    sectionIds.forEach((id) => {
+      const node = document.getElementById(id);
+      if (node) observer.observe(node);
+    });
+
+    return () => {
+      sectionIds.forEach((id) => {
+        const node = document.getElementById(id);
+        if (node) observer.unobserve(node);
+      });
+      observer.disconnect();
+    };
   }, [pathname]);
 
   const renderPublicNav = () => (
     <nav className="hidden md:flex items-center gap-8">
       {NAV_ITEMS.map((item) => {
         if (item.type === 'anchor') {
-          const anchorHref = `/${item.href.startsWith('#') ? item.href : `#${item.href}`}`;
-          const isActive =
-            pathname === '/' && (activeSection === item.id || currentPage === item.id);
+          const sectionId = item.href.replace('#', '');
+          const anchorHref = `/#${sectionId}`;
+          const isActive = pathname === '/' && (activeSection === sectionId || currentPage === item.id);
 
           return (
             <Link
@@ -85,8 +116,8 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
               onClick={(event) => {
                 if (pathname === '/' && onNavigate) {
                   event.preventDefault();
-                  setActiveSection(item.id);
-                  onNavigate(item.id);
+                  setActiveSection(sectionId);
+                  onNavigate(sectionId);
                 }
               }}
             >
