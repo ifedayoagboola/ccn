@@ -8,6 +8,7 @@ import { NewsletterSection } from "@/components/NewsletterSection";
 import { cn } from "@/lib/utils";
 import { ImageWithFallback } from "@/components/figma/ImageWithFallback";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 const curriculum = [
   {
@@ -134,7 +135,7 @@ export default function ProgrammesPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-primary/12 via-background to-secondary/40 -z-10" />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid gap-12 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)]">
-              <div className="space-y-8">
+              <div className="space-y-8 text-center lg:text-left">
                 <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/10 px-4 py-2 text-xs uppercase tracking-[0.26em] text-primary">
                   <Sparkles className="h-4 w-4" />
                   Flagship sprint
@@ -162,14 +163,14 @@ export default function ProgrammesPage() {
                     ))}
                   </div>
 
-                  <div className="flex flex-wrap gap-3">
-                    <Button asChild className="rounded-full bg-primary px-6 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                    <Button asChild className="w-full rounded-full bg-primary px-6 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark sm:w-auto">
                       <Link href="/join">
                         Join this sprint
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
-                    <Button asChild variant="outline" className="rounded-full border-primary/25 px-6 text-sm font-semibold uppercase tracking-[0.18em] text-primary hover:border-primary hover:bg-primary/10">
+                    <Button asChild variant="outline" className="w-full rounded-full border-primary/25 px-6 text-sm font-semibold uppercase tracking-[0.18em] text-primary hover:border-primary hover:bg-primary/10 sm:w-auto">
                       <Link href="#curriculum">See full schedule</Link>
                     </Button>
                   </div>
@@ -208,12 +209,12 @@ export default function ProgrammesPage() {
                   </div>
                 </div>
 
-                <div className="rounded-[28px] border border-primary/12 bg-white/80 p-6 text-sm text-foreground/70 shadow-[0_24px_60px_-48px_rgba(41,18,15,0.45)]">
+                <div className="rounded-[28px] border border-primary/12 bg-white/80 p-6 text-center text-sm text-foreground/70 shadow-[0_24px_60px_-48px_rgba(41,18,15,0.45)] lg:text-left">
                   <p className="text-base font-semibold text-primary">Need help deciding?</p>
                   <p className="mt-2">
                     Join our next info session to meet the mentors, view past portfolios, and ask anything about payment plans.
                   </p>
-                  <Button asChild variant="secondary" className="mt-4 rounded-full px-6 text-sm font-semibold text-primary">
+                  <Button asChild variant="secondary" className="mt-4 w-full rounded-full px-6 text-sm font-semibold text-primary sm:w-auto">
                     <Link href="/events">Book an info session</Link>
                   </Button>
                 </div>
@@ -360,6 +361,7 @@ export default function ProgrammesPage() {
         </section>
 
         <NewsletterSection variant="feature" />
+        <Footer />
       </main>
     </div>
   );

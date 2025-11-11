@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
-import { LogOut, Settings, User as UserIcon, ShieldCheck } from 'lucide-react';
+import { LogOut, Menu, Settings, User as UserIcon, ShieldCheck, X } from 'lucide-react';
 import { Logo } from './Logo';
 import { cn } from '@/lib/utils';
 
@@ -61,6 +61,8 @@ const LOGGED_IN_ITEMS = [
 export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: HeaderProps) {
   const pathname = usePathname();
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isCompactNav, setIsCompactNav] = useState<boolean>(false);
 
   useEffect(() => {
     if (pathname !== '/') {
@@ -97,58 +99,105 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
     };
   }, [pathname]);
 
-  const renderPublicNav = () => (
-    <nav className="hidden md:flex items-center gap-8">
-      {NAV_ITEMS.map((item) => {
-        if (item.type === 'anchor') {
-          const sectionId = item.href.replace('#', '');
-          const anchorHref = `/#${sectionId}`;
-          const isActive = pathname === '/' && (activeSection === sectionId || currentPage === item.id);
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
-          return (
-            <Link
-              key={item.id}
-              href={anchorHref}
-              className={cn(
-                'text-sm font-semibold transition-colors',
-                isActive ? 'text-primary' : 'text-foreground hover:text-primary'
-              )}
-              onClick={(event) => {
-                if (pathname === '/' && onNavigate) {
-                  event.preventDefault();
-                  setActiveSection(sectionId);
-                  onNavigate(sectionId);
-                }
-              }}
-            >
-              {item.label}
-            </Link>
-          );
-        }
+  useEffect(() => {
+    const handleResize = () => {
+      if (typeof window === 'undefined') return;
+      setIsCompactNav(window.innerWidth < 1280);
+    };
 
-        const isActive =
-          currentPage === item.id || (pathname !== '/' && pathname.startsWith(item.href));
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const renderPublicNav = (isMobile = false) => {
+    const visibleCount = isCompactNav ? 4 : NAV_ITEMS.length;
+    const primaryItems = NAV_ITEMS.slice(0, visibleCount);
+    const overflowItems = isCompactNav ? NAV_ITEMS.slice(visibleCount) : [];
+
+    const itemClass = (isActive: boolean) =>
+      cn(
+        'text-xs font-semibold transition-colors sm:text-sm',
+        isActive ? 'text-primary' : 'text-foreground hover:text-primary'
+      );
+
+    const renderItem = (item: NavItem) => {
+      if (item.type === 'anchor') {
+        const sectionId = item.href.replace('#', '');
+        const anchorHref = `/#${sectionId}`;
+        const isActive = pathname === '/' && (activeSection === sectionId || currentPage === item.id);
 
         return (
           <Link
             key={item.id}
-            href={item.href}
-            className={cn(
-              'text-sm font-semibold transition-colors',
-              isActive ? 'text-primary' : 'text-foreground hover:text-primary'
-            )}
+            href={anchorHref}
+            className={itemClass(isActive)}
+            onClick={(event) => {
+              if (pathname === '/' && onNavigate) {
+                event.preventDefault();
+                setActiveSection(sectionId);
+                onNavigate(sectionId);
+                setMobileOpen(false);
+              }
+            }}
           >
             {item.label}
           </Link>
         );
-      })}
-    </nav>
-  );
+      }
+
+      const isActive =
+        currentPage === item.id || (pathname !== '/' && pathname.startsWith(item.href));
+
+      return (
+        <Link
+          key={item.id}
+          href={item.href}
+          className={itemClass(isActive)}
+          onClick={() => setMobileOpen(false)}
+        >
+          {item.label}
+        </Link>
+      );
+    };
+
+    if (isMobile) {
+      return (
+        <nav className="grid gap-6 text-left text-lg font-semibold">
+          {NAV_ITEMS.map(renderItem)}
+        </nav>
+      );
+    }
+
+    return (
+      <nav className="hidden items-center gap-x-4 md:flex md:flex-nowrap lg:gap-x-6">
+        {primaryItems.map(renderItem)}
+        {overflowItems.length > 0 && (
+          <DropdownMenu>
+            <DropdownMenuTrigger className="text-xs font-semibold text-foreground transition-colors hover:text-primary sm:text-sm">
+              More
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-44 rounded-2xl">
+              {overflowItems.map((item) => (
+                <DropdownMenuItem key={item.id} asChild className="cursor-pointer rounded-lg">
+                  {renderItem(item)}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
+      </nav>
+    );
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b-2 border-border bg-white/95 backdrop-blur-sm">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-12">
+        <div className="flex flex-1 items-center gap-12">
           <Link
             href="/"
             className="transition-opacity hover:opacity-80"
@@ -157,6 +206,7 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
                 event.preventDefault();
                 setActiveSection(null);
                 onNavigate('landing');
+                setMobileOpen(false);
               }
             }}
           >
@@ -170,7 +220,7 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
                   key={item.id}
                   onClick={() => onNavigate?.(item.id)}
                   className={cn(
-                    'rounded-xl px-5 py-2.5 text-sm font-semibold transition-all',
+                    'rounded-xl px-4 py-2 text-xs font-semibold transition-all sm:px-5 sm:py-2.5 sm:text-sm',
                     currentPage === item.id
                       ? 'bg-primary text-primary-foreground shadow-warm'
                       : 'text-muted-foreground hover:bg-muted hover:text-foreground'
@@ -185,7 +235,7 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
           )}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 md:gap-4">
           {user ? (
             <>
               {isAdmin && (
@@ -243,13 +293,61 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
               </DropdownMenu>
             </>
           ) : (
-            <Button asChild className="rounded-xl bg-accent px-6 font-semibold text-accent-foreground hover:bg-accent/90">
-              <Link href="/join">Join the Waitlist</Link>
-            </Button>
+            <>
+              <Button asChild className="hidden rounded-full bg-accent px-6 py-2 text-sm font-semibold text-accent-foreground hover:bg-accent/90 md:flex">
+                <Link href="/join">Join the Waitlist</Link>
+              </Button>
+              <button
+                className="flex items-center justify-center rounded-full border border-border p-2 md:hidden"
+                aria-label="Toggle navigation"
+                onClick={() => setMobileOpen((prev) => !prev)}
+              >
+                <Menu className="h-5 w-5" />
+              </button>
+            </>
           )}
         </div>
       </div>
+      {!user && (
+        <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} renderNav={renderPublicNav} />
+      )}
     </header>
+  );
+}
+
+function MobileMenu({
+  open,
+  onClose,
+  renderNav,
+}: {
+  open: boolean;
+  onClose: () => void;
+  renderNav: (isMobile: boolean) => React.ReactNode;
+}) {
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-40 md:hidden">
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="absolute inset-x-0 top-0 flex h-[85vh] flex-col rounded-b-3xl bg-white p-6 shadow-xl">
+        <div className="mb-8 flex items-center justify-between">
+          <Logo height={48} />
+          <button aria-label="Close menu" onClick={onClose} className="rounded-full border border-border p-2">
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <div className="flex-1 overflow-y-auto">
+          {renderNav(true)}
+        </div>
+        <div className="pt-6">
+          <Button asChild className="w-full rounded-full bg-accent px-6 py-3 text-sm font-semibold uppercase text-accent-foreground hover:bg-accent/90">
+            <Link href="/join" onClick={onClose}>
+              Join the Waitlist
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 }
 
