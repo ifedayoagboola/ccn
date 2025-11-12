@@ -38,7 +38,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
               <div className="inline-flex items-center gap-3 rounded-full border border-primary/15 bg-primary/8 px-4 py-2 text-xs uppercase tracking-[0.24em] text-primary">
                 <span>Counter Cultural Nurses</span>
                 <span className="h-1 w-1 rounded-full bg-primary" />
-                <span>For Nigerian Nurses</span>
+                <span>For African Nurses</span>
               </div>
 
               <div className="space-y-6">
@@ -160,7 +160,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                 Why we exist
               </div>
               <h2 className="text-4xl font-semibold leading-tight text-foreground sm:text-[44px]">
-                Nigerian nurses deserve peace of mind, good pay, and time for family.
+                African nurses deserve peace of mind, good pay, and time for family.
               </h2>
               <p className="text-lg leading-relaxed text-foreground/75 first-letter:float-left first-letter:mr-3 first-letter:text-5xl first-letter:font-semibold first-letter:text-primary">
                 Many hardworking nurses feel stuck. Shifts are long, salaries are low, and it is hard to see a clear path
@@ -173,14 +173,14 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                 </p>
               </div>
               <p className="text-lg leading-relaxed text-foreground/75">
-                We give you short lessons, easy-to-use templates, and mentors who understand the Nigerian health system. You leave
+                We give you short lessons, easy-to-use templates, and mentors who understand the African health system. You leave
                 knowing what to learn, how to talk about yourself, and where to find remote jobs or extra income ideas that match your goals.
               </p>
             </article>
 
             <div className="space-y-6 rounded-[36px] border border-primary/10 bg-white/80 p-10 shadow-[0_30px_60px_-32px_rgba(41,18,15,0.55)] backdrop-blur">
               <div className="space-y-4">
-                <h3 className="text-sm uppercase tracking-[0.2em] text-primary">What you get</h3>
+                <h3 className="text-sm uppercase tracking-[0.2em] text-primary">What you get </h3>
                 {[
                   {
                     title: 'Plain teaching',

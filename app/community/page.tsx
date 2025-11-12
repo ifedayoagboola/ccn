@@ -81,7 +81,7 @@ function HeroSection() {
             A circle where nurses learn, experiment, and grow together.
           </h1>
           <p className="text-lg leading-relaxed text-foreground/75">
-            Join a living studio of Nigerian nurses building remote careers. You’ll get mentors, pods, and weekly programming designed to keep you moving forward.
+            Join a living studio of African nurses building remote careers. You’ll get mentors, pods, and weekly programming designed to keep you moving forward.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
             <Button asChild className="w-full rounded-full bg-[#5a39c6] px-7 text-sm font-semibold uppercase tracking-[0.22em] text-white hover:bg-[#4c2faf] sm:w-auto">
