@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import {
   AlarmClock,
@@ -17,41 +18,45 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { NewsletterSection } from "@/components/NewsletterSection";
 import { Footer } from "@/components/Footer";
+import { EventJoinModal } from "@/components/modals/EventJoinModal";
 import { cn } from "@/lib/utils";
 
 const UPCOMING_EVENTS = [
   {
-    title: "Portfolio Power-Up: Live Info Session",
-    date: "March 10",
-    time: "7:00 PM WAT · Zoom",
+    title: "CCN Launch: Welcome First 100 Members",
+    date: "December 12, 2024",
+    time: "Launch Day · Virtual",
     location: "Online",
     description:
-      "Meet the lead mentors, view example portfolios, and understand how the sprint runs week by week. Includes Q&A on tuition and scholarships.",
-    cta: "Reserve seat",
+      "We welcome the first 100 registered members into the CCN community. AI-powered learning path selection helps you choose the right program for your goals. Get personalized recommendations based on your experience and aspirations.",
+    cta: "Join the waitlist",
     href: "/join",
     type: "sprint",
+    featured: true,
   },
   {
-    title: "Partner Course Spotlight: Telehealth Operations",
-    date: "March 15",
-    time: "6:00 PM WAT · Hybrid",
-    location: "Innov8 Hub, Abuja + Livestream",
-    description:
-      "HealthLink Africa hosts a walkthrough of the discounted telehealth bootcamp. Hear from alumni who now lead remote operations teams.",
-    cta: "Claim discount",
-    href: "/join",
-    type: "partner",
-  },
-  {
-    title: "Career Clinic: Pricing Your Remote Services",
-    date: "March 22",
-    time: "5:30 PM WAT · Zoom",
+    title: "Mentoring & Enlightenment Event: Why Be a Counter-Cultural Nurse?",
+    date: "December 2024",
+    time: "TBA · Virtual",
     location: "Online",
     description:
-      "Interactive workshop on packaging nursing expertise for consulting, education, and digital products. Bring your questions and service ideas.",
-    cta: "Join clinic",
+      "A transformative event designed to help members understand the power and purpose of being a counter-cultural nurse. Learn from successful nurses who&apos;ve broken free from traditional constraints and built fulfilling remote careers.",
+    cta: "Reserve your spot",
+    href: "/join",
+    type: "partner",
+    featured: true,
+  },
+  {
+    title: "New Year Goals: Setting Intentions for 2025",
+    date: "Late December 2024",
+    time: "TBA · Virtual",
+    location: "Online",
+    description:
+      "Join us for a virtual event focused on setting meaningful goals for the new year. Learn how to create actionable plans for your remote career journey, connect with peers, and start 2025 with clarity and purpose.",
+    cta: "Save the date",
     href: "/join",
     type: "clinic",
+    featured: true,
   },
 ];
 
@@ -119,12 +124,25 @@ const REMINDERS = [
 ];
 
 export default function EventsPage() {
+  const [eventModalOpen, setEventModalOpen] = useState(false);
+  const [selectedEventTitle, setSelectedEventTitle] = useState<string | undefined>();
+
+  const handleEventClick = (eventTitle: string) => {
+    setSelectedEventTitle(eventTitle);
+    setEventModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header currentPage="events" />
+      <EventJoinModal 
+        open={eventModalOpen} 
+        onOpenChange={setEventModalOpen}
+        eventTitle={selectedEventTitle}
+      />
       <main>
         <HeroSection />
-        <UpcomingEvents />
+        <UpcomingEvents onEventClick={handleEventClick} />
         <ReminderSection />
         <PastEvents />
         <NewsletterSection variant="feature" />
@@ -199,18 +217,17 @@ function HeroSection() {
   );
 }
 
-function UpcomingEvents() {
+function UpcomingEvents({ onEventClick }: { onEventClick: (eventTitle: string) => void }) {
   return (
     <section className="bg-white py-24 sm:py-32">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-4 text-center">
-          <p className="text-xs uppercase tracking-[0.28em] text-accent-2/60">Upcoming sessions</p>
+          <p className="text-xs uppercase tracking-[0.28em] text-accent-2/60">Launch events</p>
           <h2 className="text-4xl font-semibold text-foreground sm:text-[44px]">
-            Choose the events that match your next career move.
+            Join us as we launch CCN and welcome our first members.
           </h2>
           <p className="mx-auto max-w-3xl text-base leading-relaxed text-foreground/70">
-            Every session highlights either the Portfolio Power-Up Challenge or a discounted partner course. Pick what serves
-            you best, then secure your spot.
+            We&apos;re launching on December 12th with three key events designed to welcome members, inspire transformation, and set goals for the new year.
           </p>
         </div>
 
@@ -220,12 +237,12 @@ function UpcomingEvents() {
               key={event.title}
               className={cn(
                 "flex h-full flex-col justify-between rounded-[28px] border border-primary/12 bg-background/90 p-8 text-sm text-foreground/70 shadow-[0_32px_72px_-52px_rgba(41,18,15,0.45)]",
-                event.type === "sprint" && "border-primary/20 bg-white",
+                event.featured && "border-primary/25 bg-gradient-to-br from-primary/5 via-white to-secondary/10 shadow-[0_36px_80px_-52px_rgba(41,18,15,0.5)]",
               )}
             >
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-                  {event.type === "sprint"
+                  {event.featured ? "Launch event" : event.type === "sprint"
                     ? "Portfolio sprint"
                     : event.type === "partner"
                     ? "Partner course"
@@ -244,13 +261,11 @@ function UpcomingEvents() {
                 <p>{event.description}</p>
               </div>
               <Button
-                asChild
+                onClick={() => onEventClick(event.title)}
                 className="mt-6 rounded-full bg-primary px-6 text-sm font-semibold uppercase tracking-[0.2em] text-primary-foreground hover:bg-primary-dark"
               >
-                <Link href={event.href}>
-                  {event.cta}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
+                {event.cta}
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </article>
           ))}

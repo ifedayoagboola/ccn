@@ -42,7 +42,6 @@ type NavItem = {
 const NAV_ITEMS: NavItem[] = [
   { id: 'about', label: 'About', type: 'anchor', href: '#about' },
   { id: 'programmes', label: 'Programmes', type: 'route', href: '/programmes' },
-  { id: 'membership', label: 'Membership', type: 'anchor', href: '#membership' },
   { id: 'community', label: 'Community', type: 'route', href: '/community' },
   { id: 'events', label: 'Events', type: 'route', href: '/events' },
   { id: 'resources', label: 'Resources', type: 'route', href: '/resources' },

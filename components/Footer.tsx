@@ -39,7 +39,6 @@ export function Footer() {
   const FOOTER_LINKS = [
     { label: "About", href: "/#about" },
     { label: "Programmes", href: "/programmes" },
-    { label: "Membership", href: "/#membership" },
     { label: "Community", href: "/community" },
     { label: "Events", href: "/events" },
     { label: "Resources", href: "/resources" },
