@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Calendar, Check, Sparkles, Users } from "lucide-react";
+import { ArrowRight, Calendar, Check, Sparkles, Users, Award, TrendingUp, FileText, MessageSquare } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { NewsletterSection } from "@/components/NewsletterSection";
@@ -124,12 +124,83 @@ const testimonials = [
   },
 ];
 
+const pastProgrammes = [
+  {
+    title: "Portfolio Power-Up",
+    subtitle: "Helping participants build a captivating portfolio",
+    duration: "14 days challenge",
+    dates: "5th - 19th June, 2025",
+    participants: 37,
+    coordinator: "Lillian Bamigboye",
+    perks: [
+      "Daily LinkedIn content",
+      "Strategies to increase visibility and attract job opportunities",
+      "Recommendation letters to participants",
+      "Access to ATS friendly Resume and cover letter templates",
+      "Exclusive opportunity to work with real brands to power up your portfolio",
+    ],
+    hashtag: null,
+    fee: null,
+  },
+  {
+    title: "Unmute your brand with Lillian",
+    subtitle: "20 days intensive LinkedIn challenge to double your brand virtual presence",
+    duration: "20 days",
+    dates: "30th April - 20th May",
+    participants: null,
+    coordinator: "Lillian Bamigboye",
+    speakers: ["Lillian Bamigboye", "Adu Joshua Opeyemi"],
+    perks: [
+      "Content templates that spark engagement",
+      "Daily LinkedIn consistency tasks",
+      "LinkedIn consistency secrets for brand owners",
+      "Q and A section with top LinkedIn creators",
+      "Daily affirmations",
+    ],
+    hashtag: null,
+    fee: "N4,000 / $3",
+  },
+  {
+    title: "Unmute your brand with Lillian 2.0",
+    subtitle: "Visible November - 11 days intensive brand visibility challenge",
+    duration: "11 days",
+    dates: "November 16th - November 26th",
+    participants: null,
+    coordinator: "Lillian Bamigboye",
+    hashtag: "#visiblenovember",
+    fee: null,
+    wins: [
+      "A complete LinkedIn Optimization Bundle",
+      "Increased visibility for your personal or business brand",
+      "A 10-day post idea plan designed to help you stay consistent",
+      "Accountability and daily guidance to keep you on track",
+      "Improved engagement and profile traction",
+      "A supportive community of professionals just like you",
+      "Networking opportunities with new collaborators",
+      "A Certificate of Completion at the end of the challenge",
+    ],
+    dailyPrompts: [
+      { day: 1, title: "Audit Your Digital Presence", prompt: "Before showing up, check what people see when they visit your page. Post your first impressions of your LinkedIn profile, what works, what you're changing, what surprised you." },
+      { day: 2, title: "Clarify Your Core Message", prompt: "Write one post explaining what you want to be known for. If someone mentions your name in a room, what should come to mind?" },
+      { day: 3, title: "Demonstrate Expertise", prompt: "Share a mini case study, something you did, how you did it, and the result. Even a small win counts." },
+      { day: 4, title: "Educate, Don't Just Post", prompt: "Teach your audience one small thing related to your niche. A shortcut, a framework, or a step-by-step breakdown." },
+      { day: 5, title: "Join a Conversation", prompt: "Find a trending topic in your field and share your take on it. You don't have to agree, your perspective matters." },
+      { day: 6, title: "Leverage Social Proof", prompt: "Share a screenshot, testimonial, or kind feedback you've received (with permission)." },
+      { day: 7, title: "Collaborate or Give Value", prompt: "Mention someone in your field, highlight their work, or collaborate on a short post. Visibility grows faster when shared." },
+      { day: 8, title: "Build in Public", prompt: "Share something you're currently working on or learning, even if it's unfinished." },
+      { day: 9, title: "Share a Bold Opinion", prompt: "Say something you believe deeply about your industry, career growth, or mindset, something most people overlook or disagree with." },
+      { day: 10, title: "Visibility Reflection", prompt: "Write about your #VisibleNovember experience, what changed for you, what you learned, and how you plan to keep showing up." },
+    ],
+  },
+];
+
 export default function ProgrammesPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header currentPage="programmes" />
       <main>
         <HeroSection />
+        <PastProgrammesSection />
 
         <section className="relative overflow-hidden py-24 sm:py-32">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/12 via-background to-secondary/40 -z-10" />
@@ -138,40 +209,49 @@ export default function ProgrammesPage() {
               <div className="space-y-8 text-center lg:text-left">
                 <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/10 px-4 py-2 text-xs uppercase tracking-[0.26em] text-primary">
                   <Sparkles className="h-4 w-4" />
-                  Flagship sprint
+                  Past Programme
                 </span>
                 <h2 className="text-4xl font-semibold text-foreground sm:text-[46px]">
-                  Portfolio Power-Up Challenge
+                  Portfolio Power-Up
                 </h2>
                 <p className="text-lg leading-relaxed text-foreground/70">
-                  Twelve weeks of guided work that turns your bedside experience into a portfolio, service offer, and income plan you can proudly show to clients or employers.
+                  A 14-day challenge that helped 37 participants build captivating portfolios. Learn strategies to increase visibility, attract job opportunities, and work with real brands to power up your portfolio.
                 </p>
+                <div className="grid gap-3 text-sm text-foreground/70">
+                  <p><strong className="text-foreground">Duration:</strong> 14 days challenge</p>
+                  <p><strong className="text-foreground">Dates:</strong> 5th - 19th June, 2025</p>
+                  <p><strong className="text-foreground">Participants:</strong> 37 nurses</p>
+                  <p><strong className="text-foreground">Coordinator:</strong> Lillian Bamigboye</p>
+                </div>
 
                 <div className="grid gap-6 rounded-3xl border border-primary/12 bg-white/90 p-8 shadow-[0_32px_72px_-48px_rgba(41,18,15,0.55)]">
-                  <div className="flex flex-col gap-2 text-sm font-semibold text-foreground">
-                    <span className="text-xs uppercase tracking-[0.3em] text-primary/70">Investment</span>
-                    <span className="text-3xl font-semibold text-primary">₦210,000</span>
-                    <span className="text-xs text-foreground/60">Flexible plan: ₦70,000 per month · Scholarships available</span>
-                  </div>
-
-                  <div className="grid gap-4 text-sm text-foreground/70">
-                    {bonuses.map((item) => (
-                      <div key={item} className="flex items-start gap-3">
-                        <Check className="mt-1 h-4 w-4 text-primary" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
+                  <div>
+                    <p className="text-sm font-semibold text-primary mb-4">What participants received:</p>
+                    <div className="grid gap-3 text-sm text-foreground/70">
+                      {[
+                        'Daily LinkedIn content',
+                        'Strategies to increase visibility and attract job opportunities',
+                        'Recommendation letters to participants',
+                        'Access to ATS friendly Resume and cover letter templates',
+                        'Exclusive opportunity to work with real brands to power up your portfolio',
+                      ].map((item) => (
+                        <div key={item} className="flex items-start gap-3">
+                          <Check className="mt-1 h-4 w-4 text-primary flex-shrink-0" />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
                   <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                     <Button asChild className="w-full rounded-full bg-primary px-6 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark sm:w-auto">
                       <Link href="/join">
-                        Join this sprint
+                        Join the waitlist
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
                     <Button asChild variant="outline" className="w-full rounded-full border-primary/25 px-6 text-sm font-semibold uppercase tracking-[0.18em] text-primary hover:border-primary hover:bg-primary/10 sm:w-auto">
-                      <Link href="#curriculum">See full schedule</Link>
+                      <Link href="#past-programmes">View all past programmes</Link>
                     </Button>
                   </div>
                 </div>
@@ -189,22 +269,23 @@ export default function ProgrammesPage() {
                     />
                   </div>
                   <div className="mt-6 space-y-3 text-sm text-foreground/70">
-                    <p className="text-sm font-semibold text-primary">Next cohort · Remote</p>
-                    <p>March 28 – June 20 · Live sessions every Thursday & Saturday</p>
-                    <p>Mentor circle: 18 nurses from Lagos, Abuja, Port Harcourt, Accra, and Nairobi.</p>
+                    <p className="text-sm font-semibold text-primary">Programme Highlights</p>
+                    <p>37 nurses completed this challenge and built their portfolios</p>
+                    <p>Real brand collaborations to showcase work</p>
+                    <p>Daily guidance and support throughout the 14 days</p>
                   </div>
                   <div className="mt-6 flex flex-wrap gap-3 text-xs uppercase tracking-[0.24em] text-foreground/60">
                     <span className="flex items-center gap-2">
                       <Calendar className="h-4 w-4" />
-                      12 weeks
+                      14 days
                     </span>
                     <span className="flex items-center gap-2">
                       <Users className="h-4 w-4" />
-                      Small cohort
+                      37 participants
                     </span>
                     <span className="flex items-center gap-2">
                       <Sparkles className="h-4 w-4" />
-                      Live feedback
+                      Real brands
                     </span>
                   </div>
                 </div>
@@ -364,6 +445,147 @@ export default function ProgrammesPage() {
         <Footer />
       </main>
     </div>
+  );
+}
+
+function PastProgrammesSection() {
+  return (
+    <section id="past-programmes" className="bg-white py-24 sm:py-32">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="space-y-4 text-center mb-16">
+          <p className="text-xs uppercase tracking-[0.28em] text-accent-2/60">CCN&apos;s past programmes</p>
+          <h2 className="text-4xl font-semibold text-foreground sm:text-[44px]">
+            Proven programmes that have transformed careers
+          </h2>
+          <p className="mx-auto max-w-3xl text-base leading-relaxed text-foreground/70">
+            These programmes have helped nurses build portfolios, amplify their brands, and connect with opportunities. See what participants achieved and get ready for what&apos;s next.
+          </p>
+        </div>
+
+        <div className="space-y-12">
+          {pastProgrammes.map((programme, index) => (
+            <div
+              key={programme.title}
+              className={`grid gap-8 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}
+            >
+              <div className={`${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
+                <div className="rounded-[32px] border border-primary/12 bg-gradient-to-br from-primary/5 via-white to-secondary/5 p-8 shadow-[0_32px_72px_-52px_rgba(41,18,15,0.35)] h-full">
+                  <div className="space-y-6">
+                    <div>
+                      <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-primary mb-4">
+                        <Award className="h-3 w-3" />
+                        Past Programme
+                      </div>
+                      <h3 className="text-2xl font-semibold text-foreground mb-2">{programme.title}</h3>
+                      <p className="text-sm text-foreground/70">{programme.subtitle}</p>
+                    </div>
+
+                    <div className="space-y-3 text-sm">
+                      <div className="flex items-center gap-2 text-foreground/70">
+                        <Calendar className="h-4 w-4 text-primary" />
+                        <span><strong className="text-foreground">Duration:</strong> {programme.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-foreground/70">
+                        <Calendar className="h-4 w-4 text-primary" />
+                        <span><strong className="text-foreground">Dates:</strong> {programme.dates}</span>
+                      </div>
+                      {programme.participants && (
+                        <div className="flex items-center gap-2 text-foreground/70">
+                          <Users className="h-4 w-4 text-primary" />
+                          <span><strong className="text-foreground">Participants:</strong> {programme.participants}</span>
+                        </div>
+                      )}
+                      {programme.fee && (
+                        <div className="flex items-center gap-2 text-foreground/70">
+                          <span><strong className="text-foreground">Fee:</strong> {programme.fee}</span>
+                        </div>
+                      )}
+                      {programme.hashtag && (
+                        <div className="flex items-center gap-2 text-foreground/70">
+                          <span><strong className="text-foreground">Hashtag:</strong> {programme.hashtag}</span>
+                        </div>
+                      )}
+                      <div className="pt-3 border-t border-primary/10">
+                        <p className="text-xs font-semibold text-primary mb-2">Coordinator</p>
+                        <p className="text-sm text-foreground">{programme.coordinator}</p>
+                        {programme.speakers && (
+                          <>
+                            <p className="text-xs font-semibold text-primary mb-2 mt-3">Speakers</p>
+                            <div className="space-y-1">
+                              {programme.speakers.map((speaker) => (
+                                <p key={speaker} className="text-sm text-foreground">{speaker}</p>
+                              ))}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className={`${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+                <div className="rounded-[32px] border border-primary/12 bg-white p-8 shadow-[0_32px_72px_-52px_rgba(41,18,15,0.35)] h-full">
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                        <TrendingUp className="h-5 w-5 text-primary" />
+                        {programme.wins ? 'Wins for Participants' : 'Perks'}
+                      </h4>
+                      <ul className="space-y-3">
+                        {(programme.wins || programme.perks || []).map((item, i) => (
+                          <li key={i} className="flex items-start gap-3 text-sm text-foreground/70">
+                            <Check className="mt-1 h-4 w-4 text-primary flex-shrink-0" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {programme.dailyPrompts && (
+                      <div className="pt-6 border-t border-primary/10">
+                        <h4 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                          <FileText className="h-5 w-5 text-primary" />
+                          10-Day Posting Prompts
+                        </h4>
+                        <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
+                          {programme.dailyPrompts.map((prompt) => (
+                            <div key={prompt.day} className="rounded-xl border border-primary/10 bg-primary/5 p-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
+                                  {prompt.day}
+                                </span>
+                                <span className="text-sm font-semibold text-foreground">Day {prompt.day} - {prompt.title}</span>
+                              </div>
+                              <p className="text-xs text-foreground/70 leading-relaxed">{prompt.prompt}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <div className="rounded-[32px] border border-primary/12 bg-gradient-to-br from-primary/5 via-white to-secondary/5 p-8 shadow-[0_32px_72px_-52px_rgba(41,18,15,0.35)]">
+            <h3 className="text-2xl font-semibold text-foreground mb-3">Ready to join the next programme?</h3>
+            <p className="text-base text-foreground/70 mb-6 max-w-2xl mx-auto">
+              Be the first to know when we launch new programmes. Join the waitlist and get early access to registration.
+            </p>
+            <Button asChild className="rounded-full bg-primary px-8 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark">
+              <Link href="/join">
+                Join the waitlist
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 

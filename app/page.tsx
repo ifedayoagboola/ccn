@@ -8,7 +8,6 @@ import { LandingPage } from '@/components/LandingPage';
 const SECTION_ANCHORS: Record<string, string> = {
   landing: 'home',
   about: 'about',
-  membership: 'membership',
   contact: 'contact',
 };
 
@@ -30,7 +29,7 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <Header onNavigate={handleNavigate} />
       <LandingPage onJoinClick={handleJoinClick} onNavigate={handleNavigate} />
-    </div>
+      </div>
   );
 }
 
