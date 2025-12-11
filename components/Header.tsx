@@ -294,7 +294,7 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
           ) : (
             <>
               <Button asChild className="hidden rounded-full bg-accent px-6 py-2 text-sm font-semibold text-accent-foreground hover:bg-accent/90 md:flex">
-                <Link href="/join">Join the Waitlist</Link>
+                <Link href="/join">Join now</Link>
               </Button>
               <button
                 className="flex items-center justify-center rounded-full border border-border p-2 md:hidden"
@@ -341,7 +341,7 @@ function MobileMenu({
         <div className="pt-6">
           <Button asChild className="w-full rounded-full bg-accent px-6 py-3 text-sm font-semibold uppercase text-accent-foreground hover:bg-accent/90">
             <Link href="/join" onClick={onClose}>
-              Join the Waitlist
+              Join now
             </Link>
           </Button>
         </div>
