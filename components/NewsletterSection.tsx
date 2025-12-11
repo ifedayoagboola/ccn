@@ -68,9 +68,9 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
   ];
 
   const stats = [
-    { icon: Users, value: '1,000+ nurses', label: 'Learning with CCN today' },
-    { icon: TrendingUp, value: '85% happy', label: 'Members say the lessons changed their work' },
-    { icon: Zap, value: 'Weekly updates', label: 'Fresh job leads and practice tasks every week' }
+    { icon: Users, value: 'Priority invites', label: 'Be first to hear when the next community cohort opens' },
+    { icon: TrendingUp, value: 'Live session alerts', label: 'Reminders for workshops, mentor AMAs, and job huddles' },
+    { icon: Zap, value: 'Only when it matters', label: 'No spam—just dates, links, and key resources' }
   ];
 
   if (variant === 'feature') {
@@ -86,14 +86,14 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
               <div className="space-y-6 text-center">
                 <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.26em] text-primary">
                   <Sparkles className="h-4 w-4" />
-                  <span>Waitlist</span>
+                  <span>Event + cohort alerts</span>
                 </div>
                 <h2 className="text-4xl font-semibold text-foreground sm:text-[44px]">
-                  Get simple guides, job alerts, and invites to live sessions.
+                  Don&apos;t miss the next community cohort or live session.
                 </h2>
                 <p className="mx-auto max-w-3xl text-base leading-relaxed text-foreground/70">
-                  Join free and receive meaningful updates only when we have something useful to share: new classes, job leads,
-                  or mentor chats.
+                  Join to get timely alerts for new cohorts, events, and happenings—so you never miss the next chance to learn,
+                  connect, or land a role. We only send updates when there&apos;s something valuable to share.
                 </p>
               </div>
 
@@ -212,10 +212,10 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
               </div>
               <h2 className="mt-6 text-4xl font-semibold text-foreground sm:text-[44px]">You&apos;re in! 🎉</h2>
               <p className="mt-4 text-base leading-relaxed text-foreground/70">
-                Look out for a welcome email, a short starter guide, and your invite to the next community call.
+                Look out for a welcome email, a short starter guide, and early reminders for the next community cohort or live session.
               </p>
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
-                {['Welcome email delivered', "Starter pack sent to your inbox"].map((item) => (
+                {['Next cohort alert reserved', 'Event calendar link on its way'].map((item) => (
                   <div key={item} className="flex items-center gap-3 rounded-3xl border border-primary/15 bg-white/85 p-4">
                     <CheckCircle2 className="h-5 w-5 text-primary" />
                     <span className="text-sm text-foreground/70">{item}</span>

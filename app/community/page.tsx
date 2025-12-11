@@ -5,7 +5,6 @@ import { ArrowRight, MessageCircle, Sparkles, Users, Video } from "lucide-react"
 
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import { NewsletterSection } from "@/components/NewsletterSection";
 import { ImageWithFallback } from "@/components/figma/ImageWithFallback";
 import { Footer } from "@/components/Footer";
 
@@ -62,7 +61,6 @@ export default function CommunityPage() {
         <MentorSection />
         <ChannelSection />
         <PartnerInviteSection />
-        <NewsletterSection variant="feature" />
         <Footer />
       </main>
     </div>

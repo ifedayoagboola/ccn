@@ -6,7 +6,6 @@ import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Input } from './ui/input';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { NewsletterSection } from './NewsletterSection';
 import { WaitlistModal } from './modals/WaitlistModal';
 import { CommunityJoinModal } from './modals/CommunityJoinModal';
 import { EventJoinModal } from './modals/EventJoinModal';
@@ -47,15 +46,6 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
       <WaitlistModal open={waitlistModalOpen} onOpenChange={setWaitlistModalOpen} />
       <CommunityJoinModal open={communityModalOpen} onOpenChange={setCommunityModalOpen} />
       <EventJoinModal open={eventModalOpen} onOpenChange={setEventModalOpen} />
-      {/* Launch Announcement Banner */}
-      <section className="bg-gradient-to-r from-primary via-primary/95 to-primary-dark py-4 text-center">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="text-sm font-semibold text-white sm:text-base">
-            🎉 Launching December 12, 2025 • 180+ nurses on the waitlist • Partners ready in education, mentoring, HR & more
-          </p>
-        </div>
-      </section>
-
       {/* Hero Section */}
       <section id="home" className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/12 via-background to-secondary -z-10" />
@@ -86,7 +76,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   size="lg"
                   className="h-14 rounded-full bg-primary px-8 text-base font-semibold tracking-wide text-primary-foreground shadow-[0_22px_40px_-24px_rgba(192,54,49,0.55)] hover:bg-primary-dark"
                 >
-                  Join the Waitlist
+                  Join the Community
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </Button>
                 <Button
@@ -101,7 +91,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
 
               <div className="grid gap-6 sm:grid-cols-3">
                 {[
-                  { value: '180+', label: 'Nurses on the waitlist' },
+                  { value: '200+', label: 'Nurses on the waitlist' },
                   { value: 'Dec 12', label: 'Official launch date' },
                   { value: 'Partners ready', label: 'Education, mentoring, HR & more' },
                 ].map((item) => (
@@ -158,13 +148,13 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   <div className="rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/5 via-white to-secondary/5 p-5">
                     <div className="space-y-3 mb-4">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-foreground">180+ nurses waiting</span>
-                        <span className="text-xs text-primary font-semibold">Be among the first 100</span>
+                        <span className="text-xs font-semibold text-foreground">200+ nurses waiting</span>
+                        <span className="text-xs text-primary font-semibold">Be among the first 50</span>
                       </div>
                       <div className="h-2 rounded-full bg-primary/10 overflow-hidden">
-                        <div className="h-full bg-primary rounded-full" style={{ width: '55%' }} />
+                        <div className="h-full bg-primary rounded-full" style={{ width: '75%' }} />
                       </div>
-                      <p className="text-xs text-foreground/60">55 spots remaining for launch day</p>
+                      <p className="text-xs text-foreground/60">15 spots remaining for launch day</p>
                     </div>
                     <Button
                       variant="secondary"
@@ -247,237 +237,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
         </div>
       </section>
 
-      {/* Section 3: What We Do */}
-      <section id="programs" className="bg-white py-24 sm:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between mb-16">
-            <div className="space-y-4">
-              <p className="text-xs uppercase tracking-[0.28em] text-accent-2/70">Our programmes</p>
-              <h2 className="text-4xl font-semibold text-foreground sm:text-[42px]">
-                Programs that make it easy to move from bedside work to online earnings.
-              </h2>
-              <p className="text-base leading-relaxed text-foreground/70">
-                Every program uses simple language, live support, and practical assignments so you always know what to do next.
-              </p>
-            </div>
-            <Button
-              variant="outline"
-              className="self-start rounded-full border-primary/25 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10"
-              asChild
-            >
-              <Link href="/programmes">View full program guide</Link>
-            </Button>
-          </div>
-
-          <div className="grid gap-8 lg:grid-cols-3">
-            {[
-              {
-                icon: <FileText className="h-6 w-6 text-primary" />,
-                title: 'Portfolio Power-Up',
-                subtitle: '14 days challenge',
-                dates: '5th - 19th June, 2025',
-                participants: '37 participants',
-                description: 'Helping participants build a captivating portfolio with daily LinkedIn content, visibility strategies, and real brand opportunities.',
-                coordinator: 'Lillian Bamigboye',
-                cta: 'View details',
-                href: '/programmes#portfolio-power-up',
-              },
-              {
-                icon: <MessageSquare className="h-6 w-6 text-primary" />,
-                title: 'Unmute your brand with Lillian',
-                subtitle: '20 days intensive',
-                dates: '30th April - 20th May',
-                participants: null,
-                description: 'Double your brand virtual presence with content templates, daily consistency tasks, and Q&A sessions with top LinkedIn creators.',
-                coordinator: 'Lillian Bamigboye',
-                cta: 'View details',
-                href: '/programmes#unmute-brand',
-              },
-              {
-                icon: <TrendingUp className="h-6 w-6 text-primary" />,
-                title: 'Visible November',
-                subtitle: '11 days challenge',
-                dates: '16th - 26th November',
-                participants: null,
-                description: 'Complete LinkedIn optimization with 10-day posting prompts, accountability guidance, and networking opportunities.',
-                coordinator: 'Lillian Bamigboye',
-                cta: 'View details',
-                href: '/programmes#visible-november',
-              },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="flex h-full flex-col rounded-[32px] border border-primary/12 bg-white p-8 shadow-[0_26px_60px_-40px_rgba(41,18,15,0.45)] transition hover:-translate-y-1 hover:shadow-[0_42px_80px_-48px_rgba(41,18,15,0.5)]"
-              >
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-primary/15 bg-primary/10">
-                  {item.icon}
-                </div>
-                <div className="mb-3">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-primary mb-3">
-                    {item.subtitle}
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">{item.title}</h3>
-                  <div className="space-y-1 text-xs text-foreground/60 mb-3">
-                    <p><strong>Dates:</strong> {item.dates}</p>
-                    {item.participants && <p><strong>Participants:</strong> {item.participants}</p>}
-                    <p><strong>Coordinator:</strong> {item.coordinator}</p>
-                  </div>
-                  <p className="text-sm leading-relaxed text-foreground/70">{item.description}</p>
-                </div>
-                <Link
-                  href={item.href}
-                  className="mt-auto inline-flex items-center text-sm font-semibold text-primary transition hover:text-primary-dark"
-                >
-                  {item.cta}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4: Our Impact */}
-      <section className="relative overflow-hidden py-24 sm:py-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-secondary via-white to-secondary/60 -z-10" />
-        <div className="absolute top-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-4 text-center">
-            <p className="text-xs uppercase tracking-[0.28em] text-accent-2/60">Launch momentum</p>
-            <h2 className="text-4xl font-semibold text-foreground sm:text-[42px]">
-              Building a movement, one nurse at a time.
-            </h2>
-            <p className="mx-auto max-w-2xl text-base leading-relaxed text-foreground/70">
-              We&apos;re launching with strong support from nurses, partners, and the community. Join us as we begin this journey together.
-            </p>
-          </div>
-
-          <div className="mt-14 overflow-hidden rounded-full border border-primary/12 bg-white/90 shadow-[0_40px_80px_-60px_rgba(41,18,15,0.45)] backdrop-blur">
-            <div className="grid gap-6 px-8 py-8 sm:grid-cols-3 sm:px-12">
-              {[
-                {
-                  heading: 'On the waitlist',
-                  stat: '180+',
-                  subtext: 'Nurses ready to join when we launch on December 12th.',
-                },
-                {
-                  heading: 'Partners ready',
-                  stat: 'Multiple',
-                  subtext: 'Education, mentoring, HR, and other sectors waiting to support our members.',
-                },
-                {
-                  heading: 'Launch goal',
-                  stat: '100',
-                  subtext: 'First members to be welcomed into the community on launch day.',
-                },
-              ].map((item) => (
-                <div key={item.heading} className="flex flex-col items-start gap-3 border-primary/10 sm:border-l first:sm:border-l-0 sm:pl-10">
-                  <span className="text-xs uppercase tracking-[0.28em] text-foreground/50">{item.heading}</span>
-                  <span className="font-heading text-[42px] font-semibold text-primary">{item.stat}</span>
-                  <span className="text-sm leading-relaxed text-foreground/70">{item.subtext}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-12 flex flex-col items-center gap-3 text-center">
-            <p className="text-sm uppercase tracking-[0.24em] text-accent-2/70">Be part of the launch</p>
-            <Button
-              variant="outline"
-              size="lg"
-              className="rounded-full border-primary/25 px-8 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10"
-              asChild
-            >
-              <Link href="/programmes">
-                Explore our programs
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 5: AI Career Navigator */}
-      <section className="bg-white py-24 sm:py-28">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-16 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,0.4fr)]">
-            <div className="space-y-8">
-              <div className="inline-flex items-center gap-3 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-xs uppercase tracking-[0.24em] text-primary">
-                <Brain className="h-4 w-4" />
-                <span>Coming Soon</span>
-              </div>
-              <h2 className="text-4xl font-semibold leading-tight text-foreground sm:text-[44px]">
-                AI Career Navigator: Your Personal Guide to Success
-              </h2>
-              <p className="text-lg leading-relaxed text-foreground/75">
-                We&apos;re building an AI-powered tool designed to help you create a clearer vision and navigate your career more smoothly. Our AI integration will help confused individuals identify their strengths and weaknesses, and recommend mentors, programmes, and courses to help take them to their next level.
-              </p>
-              <div className="rounded-3xl border border-primary/15 bg-primary/5 p-6">
-                <p className="text-sm font-semibold text-primary mb-4">What the AI will help you with:</p>
-                <ul className="space-y-3 text-sm text-foreground/70">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                    <span>Create a clearer vision for your remote career journey</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                    <span>Identify your strengths and areas for growth</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                    <span>Get personalized recommendations for mentors who match your goals</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                    <span>Discover programmes and courses tailored to your career path</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                    <span>Navigate your career transition with confidence and clarity</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="rounded-2xl border border-primary/12 bg-background/50 p-6">
-                <p className="text-sm text-foreground/70">
-                  <strong className="text-foreground">Note:</strong> The AI Career Navigator is currently in development. We&apos;re working hard to bring you this powerful tool that will make your career journey smoother and more personalized. Stay tuned for updates!
-                </p>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="sticky top-24">
-                <div className="rounded-[32px] border border-primary/12 bg-gradient-to-br from-primary/5 via-white to-secondary/10 p-8 shadow-[0_36px_80px_-52px_rgba(41,18,15,0.35)]">
-                  <div className="flex flex-col items-center text-center space-y-6">
-                    <div className="rounded-full border border-primary/20 bg-primary/10 p-6">
-                      <Brain className="h-12 w-12 text-primary" />
-                    </div>
-                    <div className="space-y-2">
-                      <h3 className="text-xl font-semibold text-foreground">AI Career Navigator</h3>
-                      <p className="text-sm text-foreground/70">Coming Soon</p>
-                    </div>
-                    <div className="w-full space-y-3 text-sm text-foreground/70">
-                      <div className="flex items-center gap-3 rounded-xl border border-primary/10 bg-white/50 p-3">
-                        <Sparkles className="h-5 w-5 text-primary" />
-                        <span>Personalized career guidance</span>
-                      </div>
-                      <div className="flex items-center gap-3 rounded-xl border border-primary/10 bg-white/50 p-3">
-                        <UserCheck className="h-5 w-5 text-primary" />
-                        <span>Mentor matching</span>
-                      </div>
-                      <div className="flex items-center gap-3 rounded-xl border border-primary/10 bg-white/50 p-3">
-                        <Target className="h-5 w-5 text-primary" />
-                        <span>Programme recommendations</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 6: Community Preview */}
+      {/* Section 3: Community Preview */}
       <section className="bg-gradient-to-br from-primary/10 via-white to-secondary/10 py-24 sm:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)]">
@@ -559,7 +319,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
         </div>
       </section>
 
-      {/* Section 6: Testimonials */}
+      {/* Section 4: Community Testimonials */}
       <section id="community" className="bg-background py-24 sm:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-6 text-center sm:items-center">
@@ -654,56 +414,175 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
         </div>
       </section>
 
-      {/* Section 7: Join the Movement */}
-      <section className="relative overflow-hidden py-24 sm:py-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/14 via-white to-secondary/30 -z-10" />
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-semibold text-foreground sm:text-[44px]">Ready to take the next step?</h2>
-          <p className="mx-auto mt-5 max-w-3xl text-lg leading-relaxed text-foreground/75">
-            Join the waitlist to receive easy-to-follow resources and be first to know when a new class opens. Already in tech or running a program? Partner with us to support more nurses.
-          </p>
-
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button
-              onClick={() => setWaitlistModalOpen(true)}
-              className="h-12 rounded-full bg-primary px-8 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark"
-            >
-              Join the waitlist
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+      {/* Section 5: What We Do */}
+      <section id="programs" className="bg-white py-24 sm:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between mb-16">
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-[0.28em] text-accent-2/70">Our programmes</p>
+              <h2 className="text-4xl font-semibold text-foreground sm:text-[42px]">
+                Programs that make it easy to move from bedside work to online earnings.
+              </h2>
+              <p className="text-base leading-relaxed text-foreground/70">
+                Every program uses simple language, live support, and practical assignments so you always know what to do next.
+              </p>
+            </div>
             <Button
               variant="outline"
-              className="h-12 rounded-full border-primary/25 px-8 text-sm font-semibold uppercase tracking-[0.22em] text-primary hover:border-primary hover:bg-primary/10"
+              className="self-start rounded-full border-primary/25 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10"
               asChild
             >
-              <Link href="/partnerships">
-                Partner with us
-                <ExternalLink className="ml-2 h-4 w-4" />
-              </Link>
+              <Link href="/programmes">See our past Programmes</Link>
             </Button>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-xs uppercase tracking-[0.26em] text-foreground/50">
-            <span className="flex items-center gap-2">
-              <span className="h-1 w-1 rounded-full bg-primary/60" />
-              Remote-friendly skills
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="h-1 w-1 rounded-full bg-primary/60" />
-              Supportive mentors
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="h-1 w-1 rounded-full bg-primary/60" />
-              Clear money plan
-            </span>
+          <div className="grid gap-8 lg:grid-cols-3">
+            {[
+              {
+                icon: <FileText className="h-6 w-6 text-primary" />,
+                title: 'Portfolio Power-Up',
+                subtitle: '14 days challenge',
+                dates: '5th - 19th June, 2025',
+                participants: '37 participants',
+                description: 'Helping participants build a captivating portfolio with daily LinkedIn content, visibility strategies, and real brand opportunities.',
+                coordinator: 'Lillian Bamigboye',
+                cta: 'View details',
+                href: '/programmes#portfolio-power-up',
+              },
+              {
+                icon: <MessageSquare className="h-6 w-6 text-primary" />,
+                title: 'Unmute your brand with Lillian',
+                subtitle: '20 days intensive',
+                dates: '30th April - 20th May',
+                participants: null,
+                description: 'Double your brand virtual presence with content templates, daily consistency tasks, and Q&A sessions with top LinkedIn creators.',
+                coordinator: 'Lillian Bamigboye',
+                cta: 'View details',
+                href: '/programmes#unmute-brand',
+              },
+              {
+                icon: <TrendingUp className="h-6 w-6 text-primary" />,
+                title: 'Visible November',
+                subtitle: '11 days challenge',
+                dates: '16th - 26th November',
+                participants: null,
+                description: 'Complete LinkedIn optimization with 10-day posting prompts, accountability guidance, and networking opportunities.',
+                coordinator: 'Lillian Bamigboye',
+                cta: 'View details',
+                href: '/programmes#visible-november',
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="flex h-full flex-col rounded-[32px] border border-primary/12 bg-white p-8 shadow-[0_26px_60px_-40px_rgba(41,18,15,0.45)] transition hover:-translate-y-1 hover:shadow-[0_42px_80px_-48px_rgba(41,18,15,0.5)]"
+              >
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-primary/15 bg-primary/10">
+                  {item.icon}
+                </div>
+                <div className="mb-3">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-primary mb-3">
+                    {item.subtitle}
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">{item.title}</h3>
+                  <div className="space-y-1 text-xs text-foreground/60 mb-3">
+                    <p><strong>Dates:</strong> {item.dates}</p>
+                    {item.participants && <p><strong>Participants:</strong> {item.participants}</p>}
+                    <p><strong>Coordinator:</strong> {item.coordinator}</p>
+                  </div>
+                  <p className="text-sm leading-relaxed text-foreground/70">{item.description}</p>
+                </div>
+                <Link
+                  href={item.href}
+                  className="mt-auto inline-flex items-center text-sm font-semibold text-primary transition hover:text-primary-dark"
+                >
+                  {item.cta}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Newsletter/Waitlist Section */}
-      <NewsletterSection variant="feature" />
+      {/* Section 6: AI Career Navigator */}
+      <section className="bg-white py-24 sm:py-28">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-16 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,0.4fr)]">
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-3 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-xs uppercase tracking-[0.24em] text-primary">
+                <Brain className="h-4 w-4" />
+                <span>Coming Soon</span>
+              </div>
+              <h2 className="text-4xl font-semibold leading-tight text-foreground sm:text-[44px]">
+                AI Career Navigator: Your Personal Guide to Success
+              </h2>
+              <p className="text-lg leading-relaxed text-foreground/75">
+                We&apos;re building an AI-powered tool designed to help you create a clearer vision and navigate your career more smoothly. Our AI integration will help confused individuals identify their strengths and weaknesses, and recommend mentors, programmes, and courses to help take them to their next level.
+              </p>
+              <div className="rounded-3xl border border-primary/15 bg-primary/5 p-6">
+                <p className="text-sm font-semibold text-primary mb-4">What the AI will help you with:</p>
+                <ul className="space-y-3 text-sm text-foreground/70">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Create a clearer vision for your remote career journey</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Identify your strengths and areas for growth</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Get personalized recommendations for mentors who match your goals</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Discover programmes and courses tailored to your career path</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Navigate your career transition with confidence and clarity</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="rounded-2xl border border-primary/12 bg-background/50 p-6">
+                <p className="text-sm text-foreground/70">
+                  <strong className="text-foreground">Note:</strong> The AI Career Navigator is currently in development. We&apos;re working hard to bring you this powerful tool that will make your career journey smoother and more personalized. Stay tuned for updates!
+                </p>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="sticky top-24">
+                <div className="rounded-[32px] border border-primary/12 bg-gradient-to-br from-primary/5 via-white to-secondary/10 p-8 shadow-[0_36px_80px_-52px_rgba(41,18,15,0.35)]">
+                  <div className="flex flex-col items-center text-center space-y-6">
+                    <div className="rounded-full border border-primary/20 bg-primary/10 p-6">
+                      <Brain className="h-12 w-12 text-primary" />
+                    </div>
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-semibold text-foreground">AI Career Navigator</h3>
+                      <p className="text-sm text-foreground/70">Coming Soon</p>
+                    </div>
+                    <div className="w-full space-y-3 text-sm text-foreground/70">
+                      <div className="flex items-center gap-3 rounded-xl border border-primary/10 bg-white/50 p-3">
+                        <Sparkles className="h-5 w-5 text-primary" />
+                        <span>Personalized career guidance</span>
+                      </div>
+                      <div className="flex items-center gap-3 rounded-xl border border-primary/10 bg-white/50 p-3">
+                        <UserCheck className="h-5 w-5 text-primary" />
+                        <span>Mentor matching</span>
+                      </div>
+                      <div className="flex items-center gap-3 rounded-xl border border-primary/10 bg-white/50 p-3">
+                        <Target className="h-5 w-5 text-primary" />
+                        <span>Programme recommendations</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
