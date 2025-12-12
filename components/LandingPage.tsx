@@ -15,7 +15,6 @@ import {
   Target, 
   ArrowRight, 
   CheckCircle, 
-  ExternalLink,
   Sparkles,
   Brain,
   UserCheck,
@@ -40,6 +39,18 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
   
   // For now, focus is on waitlist. This can be changed to 'community' or 'event' later
   const heroPromotion: HeroPromotionType = 'waitlist';
+  const partners = [
+    { name: 'HealthBridge Clinics' },
+    { name: 'Nova Telehealth' },
+    { name: 'AfriCare University' },
+    { name: 'BrightLabs Health' },
+    { name: 'WellSpring HMO' },
+    { name: 'Digital Nurses Africa' },
+    { name: 'Nodeshift', logoSrc: '/assets/nodeshift.jpeg' },
+    { name: 'Sellexa', logoSrc: '/assets/sellexa-high-resolution-logo-transparent.png' },
+    { name: 'OpenCare Partners' },
+    { name: 'Africa MedTech Lab' },
+  ];
 
   return (
     <div className="min-h-screen bg-white">
@@ -76,7 +87,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   size="lg"
                   className="h-14 rounded-full bg-primary px-8 text-base font-semibold tracking-wide text-primary-foreground shadow-[0_22px_40px_-24px_rgba(192,54,49,0.55)] hover:bg-primary-dark"
                 >
-                  Join the Community
+                  Join the movement
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </Button>
                 <Button
@@ -221,10 +232,6 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                     title: 'Remote work opportunities',
                     copy: 'Access verified remote job listings, contract gigs, and partnership openings. We connect you with opportunities that match the skills you&apos;re developing.'
                   },
-                  {
-                    title: 'Financial independence',
-                    copy: 'Learn how to earn on your own terms. Build multiple income streams, set fair rates, and create financial stability while doing work you love.'
-                  },
                 ].map((item) => (
                   <div key={item.title} className="border-t border-dashed border-primary/15 pt-6 first:border-t-0 first:pt-0">
                     <p className="text-base font-semibold text-primary">{item.title}</p>
@@ -232,6 +239,14 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   </div>
                 ))}
               </div>
+
+              <Button
+                asChild
+                variant="outline"
+                className="w-full rounded-full border-primary/25 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10"
+              >
+                <Link href="/about">Read the full story</Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -285,7 +300,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   className="h-12 rounded-full bg-primary px-6 text-sm font-semibold uppercase tracking-[0.2em] text-primary-foreground hover:bg-primary-dark"
                   onClick={() => setCommunityModalOpen(true)}
                 >
-                  Join the community
+                  Join the movement
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
                 <Button
@@ -319,99 +334,93 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
         </div>
       </section>
 
-      {/* Section 4: Community Testimonials */}
-      <section id="community" className="bg-background py-24 sm:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-6 text-center sm:items-center">
-            <p className="text-xs uppercase tracking-[0.28em] text-accent-2/70">Voices from inside</p>
-            <h2 className="max-w-3xl text-4xl font-semibold text-foreground sm:text-[44px]">
-              Built for bedside experts who know they are more.
+      {/* Section 4: Partners / Clients */}
+      <section
+        id="community"
+        className="bg-background py-8 sm:py-10"
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-2 text-center sm:items-center">
+            <p className="text-[11px] uppercase tracking-[0.28em] text-accent-2/70">Partners & Clients</p>
+            <h2 className="max-w-3xl text-3xl font-semibold text-foreground sm:text-[38px]">
+              Trusted by teams who want remote-ready African nurses.
             </h2>
-            <p className="max-w-2xl text-base leading-relaxed text-foreground/70">
-              Every nurse carries a before-and-after story. We honour the nuance behind each transformation.
+            <p className="max-w-2xl text-sm leading-relaxed text-foreground/70">
+              A quick look at some of the organisations collaborating with CCN.
             </p>
           </div>
 
-          <div className="mt-20 grid gap-10 lg:grid-cols-[minmax(0,0.65fr)_minmax(0,0.35fr)]">
-            <div className="rounded-[36px] border border-primary/12 bg-white p-10 shadow-[0_40px_80px_-60px_rgba(41,18,15,0.45)]">
-              <div className="flex flex-col gap-8">
-                <div className="flex items-center gap-4">
-                  <div className="relative h-16 w-16 overflow-hidden rounded-full border border-primary/15">
-                    <ImageWithFallback
-                      src="https://images.unsplash.com/photo-1755189118414-14c8dacdb082?auto=format&fit=crop&w=240&q=80"
-                      alt="Amaka O."
-                      fill
-                      className="object-cover"
-                      sizes="64px"
-                    />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-lg font-semibold text-foreground">Amaka O.</p>
-                    <p className="text-sm text-foreground/60">Telehealth Nurse · Lagos</p>
-                  </div>
-                </div>
-                <p className="text-lg italic text-foreground">
-                  “Before CCN I worked day and night. Now I see fewer patients online, earn more, and still have time for my children. The lessons were simple and the mentors treated me like family.”
-                </p>
+          <div className="mt-6 rounded-[18px] border border-primary/12 bg-white/90 p-4 shadow-[0_24px_50px_-50px_rgba(41,18,15,0.45)] sm:p-5">
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white/90 to-white/0 pointer-events-none" />
+              <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white/90 to-white/0 pointer-events-none" />
+              <div className="marquee flex items-center gap-4 sm:gap-6 md:gap-7 py-1">
+                {partners
+                  .concat(partners)
+                  .map((partner, idx) => (
+                    <div
+                      key={`${partner.name}-${idx}`}
+                      className="flex min-w-[140px] items-center justify-center gap-3 rounded-2xl border border-primary/10 bg-gradient-to-br from-primary/6 via-white to-secondary/8 px-3.5 py-2.5 shadow-[0_16px_38px_-34px_rgba(41,18,15,0.4)]"
+                    >
+                      {partner.logoSrc ? (
+                        <div
+                          className={`
+                            flex items-center justify-center rounded-xl bg-primary/6
+                            ${partner.name.toLowerCase() === 'sellexa' ? 'h-10 w-16' : 'h-9 w-9'}
+                          `}
+                        >
+                          <ImageWithFallback
+                            src={partner.logoSrc}
+                            alt={`${partner.name} logo`}
+                            width={partner.name.toLowerCase() === 'sellexa' ? 64 : 36}
+                            height={partner.name.toLowerCase() === 'sellexa' ? 40 : 36}
+                            className="h-full w-full object-contain"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/12 text-xs font-semibold text-primary">
+                          {partner.name
+                            .split(' ')
+                            .map((word) => word[0])
+                            .join('')
+                            .slice(0, 3)
+                            .toUpperCase()}
+                        </div>
+                      )}
+                      {partner.name.toLowerCase() !== 'sellexa' && (
+                        <span className="text-sm font-semibold text-foreground/80 whitespace-nowrap">{partner.name}</span>
+                      )}
+                    </div>
+                  ))}
               </div>
             </div>
 
-            <div className="flex flex-col gap-6">
-              {[
-                {
-                  quote:
-                    '“The challenge helped me write my story in plain English. I used the template, sent it to a client, and got my first paid medical writing job within four weeks.”',
-                  name: 'Chidi E.',
-                  role: 'Medical Writer · Abuja',
-                  image: 'https://images.unsplash.com/photo-1676552055618-22ec8cde399a?auto=format&fit=crop&w=200&q=80',
-                },
-                {
-                  quote:
-                    '“I thought online work was only for tech bros. CCN showed me simple tools and gave me courage. I now teach health classes on Zoom and earn in dollars.”',
-                  name: 'Folake A.',
-                  role: 'Health Educator · Ibadan',
-                  image: 'https://images.unsplash.com/photo-1643246681510-b917ea41b893?auto=format&fit=crop&w=200&q=80',
-                },
-              ].map((item) => (
-                <div
-                  key={item.name}
-                  className="rounded-[28px] border border-primary/12 bg-white/80 p-6 shadow-[0_28px_60px_-48px_rgba(41,18,15,0.45)]"
-                >
-                  <div className="mb-4 flex items-center gap-4">
-                    <div className="relative h-12 w-12 overflow-hidden rounded-full border border-primary/15">
-                      <ImageWithFallback
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        className="object-cover"
-                        sizes="48px"
-                      />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">{item.name}</p>
-                      <p className="text-xs text-foreground/60">{item.role}</p>
-                    </div>
-                  </div>
-                  <p className="text-sm leading-relaxed text-foreground/75">{item.quote}</p>
-                </div>
-              ))}
+            <div className="mt-5 flex items-center justify-center">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="rounded-full text-sm font-semibold text-primary hover:text-primary-dark"
+                asChild
+              >
+                <Link href="/partnerships">Explore partnerships</Link>
+              </Button>
             </div>
           </div>
-
-          <div className="mt-14 flex justify-center">
-            <Button
-              variant="outline"
-              size="lg"
-              className="rounded-full border-primary/25 px-8 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10"
-              asChild
-            >
-              <Link href="/community">
-                Meet the community
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
         </div>
+        <style jsx>{`
+          .marquee {
+            width: max-content;
+            animation: marquee 20s linear infinite;
+          }
+          @keyframes marquee {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+        `}</style>
       </section>
 
       {/* Section 5: What We Do */}
