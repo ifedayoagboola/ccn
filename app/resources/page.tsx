@@ -5,7 +5,6 @@ import { ArrowRight, BookCopy, Download, FileText, Mic, Search } from "lucide-re
 
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import { NewsletterSection } from "@/components/NewsletterSection";
 import { Footer } from "@/components/Footer";
 
 const GUIDES = [
@@ -65,7 +64,6 @@ export default function ResourcesPage() {
         <GuideSection />
         <AudioSection />
         <PathwaySection />
-        <NewsletterSection variant="feature" />
         <Footer />
       </main>
     </div>

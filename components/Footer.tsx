@@ -37,14 +37,9 @@ export function Footer() {
   });
 
   const FOOTER_LINKS = [
-    { label: "About", href: "/#about" },
+    { label: "About", href: "/about" },
     { label: "Programmes", href: "/programmes" },
-    { label: "Community", href: "/community" },
-    { label: "Events", href: "/events" },
-    { label: "Resources", href: "/resources" },
-    { label: "Stories", href: "/stories" },
     { label: "Partnerships", href: "/partnerships" },
-    { label: "Join the Waitlist", href: "/join" },
   ];
 
   return (

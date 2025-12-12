@@ -70,7 +70,7 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
   const stats = [
     { icon: Users, value: 'Priority invites', label: 'Be first to hear when the next community cohort opens' },
     { icon: TrendingUp, value: 'Live session alerts', label: 'Reminders for workshops, mentor AMAs, and job huddles' },
-    { icon: Zap, value: 'Only when it matters', label: 'No spam—just dates, links, and key resources' }
+    { icon: Zap, value: 'Only when it matters', label: 'No spam - just dates, links, and key resources' }
   ];
 
   if (variant === 'feature') {
@@ -92,7 +92,7 @@ export function NewsletterSection({ variant = 'default', className = '' }: Newsl
                   Don&apos;t miss the next community cohort or live session.
                 </h2>
                 <p className="mx-auto max-w-3xl text-base leading-relaxed text-foreground/70">
-                  Join to get timely alerts for new cohorts, events, and happenings—so you never miss the next chance to learn,
+                  Join to get timely alerts for new cohorts, events, and happenings - so you never miss the next chance to learn,
                   connect, or land a role. We only send updates when there&apos;s something valuable to share.
                 </p>
               </div>

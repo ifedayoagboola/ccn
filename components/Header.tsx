@@ -16,6 +16,7 @@ import {
 import { LogOut, Menu, Settings, User as UserIcon, ShieldCheck, X } from 'lucide-react';
 import { Logo } from './Logo';
 import { cn } from '@/lib/utils';
+import { CommunityJoinPaymentModal } from './modals/CommunityJoinPaymentModal';
 
 interface User {
   name: string;
@@ -42,10 +43,6 @@ type NavItem = {
 const NAV_ITEMS: NavItem[] = [
   { id: 'about', label: 'About', type: 'route', href: '/about' },
   { id: 'programmes', label: 'Programmes', type: 'route', href: '/programmes' },
-  { id: 'community', label: 'Community', type: 'route', href: '/community' },
-  { id: 'events', label: 'Events', type: 'route', href: '/events' },
-  { id: 'resources', label: 'Resources', type: 'route', href: '/resources' },
-  { id: 'stories', label: 'Stories', type: 'route', href: '/stories' },
   { id: 'partnerships', label: 'Partnerships', type: 'route', href: '/partnerships' },
 ];
 
@@ -62,6 +59,7 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isCompactNav, setIsCompactNav] = useState<boolean>(false);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
 
   useEffect(() => {
     if (pathname !== '/') {
@@ -293,8 +291,11 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
             </>
           ) : (
             <>
-              <Button asChild className="hidden rounded-full bg-accent px-6 py-2 text-sm font-semibold text-accent-foreground hover:bg-accent/90 md:flex">
-                <Link href="/join">Join now</Link>
+              <Button 
+                onClick={() => setPaymentModalOpen(true)}
+                className="hidden rounded-full bg-accent px-6 py-2 text-sm font-semibold text-accent-foreground hover:bg-accent/90 md:flex"
+              >
+                Join movement
               </Button>
               <button
                 className="flex items-center justify-center rounded-full border border-border p-2 md:hidden"
@@ -308,8 +309,14 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
         </div>
       </div>
       {!user && (
-        <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} renderNav={renderPublicNav} />
+        <MobileMenu 
+          open={mobileOpen} 
+          onClose={() => setMobileOpen(false)} 
+          renderNav={renderPublicNav}
+          onPaymentClick={() => setPaymentModalOpen(true)}
+        />
       )}
+      <CommunityJoinPaymentModal open={paymentModalOpen} onOpenChange={setPaymentModalOpen} />
     </header>
   );
 }
@@ -318,10 +325,12 @@ function MobileMenu({
   open,
   onClose,
   renderNav,
+  onPaymentClick,
 }: {
   open: boolean;
   onClose: () => void;
   renderNav: (isMobile: boolean) => React.ReactNode;
+  onPaymentClick: () => void;
 }) {
   if (!open) return null;
 
@@ -339,10 +348,14 @@ function MobileMenu({
           {renderNav(true)}
         </div>
         <div className="pt-6">
-          <Button asChild className="w-full rounded-full bg-accent px-6 py-3 text-sm font-semibold uppercase text-accent-foreground hover:bg-accent/90">
-            <Link href="/join" onClick={onClose}>
-              Join now
-            </Link>
+          <Button 
+            onClick={() => {
+              onPaymentClick();
+              onClose();
+            }}
+            className="w-full rounded-full bg-accent px-6 py-3 text-sm font-semibold uppercase text-accent-foreground hover:bg-accent/90"
+          >
+            Join movement
           </Button>
         </div>
       </div>

@@ -17,7 +17,6 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { NewsletterSection } from "@/components/NewsletterSection";
 import { Footer } from "@/components/Footer";
 import { cn } from "@/lib/utils";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
@@ -67,7 +66,6 @@ export default function JoinPage() {
         <StepsSection />
         <ApplicationForm />
         <SupportSection />
-        <NewsletterSection variant="feature" />
         <Footer />
       </main>
     </div>

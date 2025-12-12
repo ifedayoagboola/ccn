@@ -25,8 +25,8 @@ export default function AuthDebugPage() {
             </p>
             <pre className="max-h-64 overflow-auto rounded-xl bg-muted p-3 text-xs text-muted-foreground">
 {`ID: ${user.id}
-Email: ${user.email ?? '—'}
-Provider: ${user.app_metadata?.provider ?? '—'}`}
+Email: ${user.email ?? '-'}
+Provider: ${user.app_metadata?.provider ?? '-'}`}
             </pre>
             <Button variant="outline" onClick={signOut}>
               Sign out

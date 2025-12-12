@@ -12,7 +12,6 @@ import {
 
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import { NewsletterSection } from "@/components/NewsletterSection";
 import { ImageWithFallback } from "@/components/figma/ImageWithFallback";
 import { Footer } from "@/components/Footer";
 
@@ -82,7 +81,6 @@ export default function StoriesPage() {
         <StoriesGrid />
         <MediaSection />
         <CtaSection />
-        <NewsletterSection variant="feature" />
         <Footer />
       </main>
     </div>
@@ -139,7 +137,7 @@ function HeroSection() {
               <div className="flex items-start gap-3">
                 <Sparkles className="mt-1 h-5 w-5" />
                 <p>
-                  “Every Thursday we meet for victory rollcall. No win is too small—publishing a LinkedIn post counts just as much as landing a new client.”
+                  “Every Thursday we meet for victory rollcall. No win is too small - publishing a LinkedIn post counts just as much as landing a new client.”
                 </p>
               </div>
             </div>
@@ -178,7 +176,7 @@ function StoriesGrid() {
             “If they did it, so can I.”
           </h2>
           <p className="mx-auto max-w-3xl text-base leading-relaxed text-foreground/70">
-            Every success story below includes the programme path they chose—flagship sprint, partner course, or both—so you can model your own journey.
+            Every success story below includes the programme path they chose - flagship sprint, partner course, or both - so you can model your own journey.
           </p>
         </div>
 
@@ -271,8 +269,8 @@ function CtaSection() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-4xl font-semibold text-foreground sm:text-[44px]">Ready to write your own CCN story?</h2>
         <p className="mt-5 text-lg leading-relaxed text-foreground/70">
-          Whether you want to join the Portfolio Power-Up Challenge or enrol in a discounted partner course, the first step is
-          the same: submit your application and hop on a human onboarding call.
+          Whether you want to join the Portfolio Power-Up Challenge or explore our programmes, the first step is the same:
+          submit your application and hop on a human onboarding call.
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button asChild className="h-12 rounded-full bg-primary px-8 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark">
@@ -282,8 +280,8 @@ function CtaSection() {
             </Link>
           </Button>
           <Button asChild variant="outline" className="h-12 rounded-full border-primary/25 px-8 text-sm font-semibold uppercase tracking-[0.22em] text-primary hover:border-primary hover:bg-primary/10">
-            <Link href="/programmes#partner-courses">
-              Claim partner discount
+            <Link href="/programmes">
+              Explore programmes
               <BookOpen className="ml-2 h-4 w-4" />
             </Link>
           </Button>
