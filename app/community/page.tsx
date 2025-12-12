@@ -84,7 +84,7 @@ function HeroSection() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
             <Button asChild className="w-full rounded-full bg-[#5a39c6] px-7 text-sm font-semibold uppercase tracking-[0.22em] text-white hover:bg-[#4c2faf] sm:w-auto">
               <Link href="/join">
-                Join the community
+                Join the movement
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

@@ -40,7 +40,7 @@ type NavItem = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { id: 'about', label: 'About', type: 'anchor', href: '#about' },
+  { id: 'about', label: 'About', type: 'route', href: '/about' },
   { id: 'programmes', label: 'Programmes', type: 'route', href: '/programmes' },
   { id: 'community', label: 'Community', type: 'route', href: '/community' },
   { id: 'events', label: 'Events', type: 'route', href: '/events' },
