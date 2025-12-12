@@ -37,6 +37,15 @@ CREATE INDEX IF NOT EXISTS idx_members_payment_reference ON public.members(payme
 CREATE INDEX IF NOT EXISTS idx_members_joined_at ON public.members(joined_at DESC);
 CREATE INDEX IF NOT EXISTS idx_members_membership_status ON public.members(membership_status);
 
+-- Create or replace the update_updated_at_column function (if it doesn't exist)
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 -- Create updated_at trigger
 DROP TRIGGER IF EXISTS update_members_updated_at ON public.members;
 CREATE TRIGGER update_members_updated_at

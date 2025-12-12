@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
     const email = transaction.customer?.email;
     const name = transaction.metadata?.custom_fields?.find(
       (field: any) => field.variable_name === 'full_name'
-    )?.value || transaction.customer?.first_name || '';
+    )?.value || transaction.customer?.first_name || transaction.customer?.last_name || 'Customer';
 
     if (!email) {
       return NextResponse.json(
@@ -75,36 +75,115 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Validate name - ensure it meets database constraints (min 2 characters)
+    const trimmedName = String(name).trim();
+    let finalName: string;
+    if (trimmedName.length < 2) {
+      console.warn(`Name too short (${trimmedName.length} chars), using email as fallback`);
+      // Use email username part as fallback if name is invalid
+      const emailUsername = email.split('@')[0] || 'Customer';
+      finalName = emailUsername.length >= 2 ? emailUsername : 'Customer';
+    } else {
+      finalName = trimmedName;
+    }
+
     // Store paid user in database
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('Supabase configuration missing - cannot register member');
+      return NextResponse.json(
+        { error: 'Server configuration error - member registration failed' },
+        { status: 500 }
+      );
+    }
+
     try {
-      if (supabaseUrl && supabaseKey) {
-        const supabase = createClient<Database>(supabaseUrl, supabaseKey);
-        
-        const { error: dbError } = await (supabase
+      const supabase = createClient<Database>(supabaseUrl, supabaseKey);
+      const normalizedEmail = String(email).trim().toLowerCase();
+      const paymentRef = transaction.reference;
+
+      // Check if member already exists by payment reference or email
+      const { data: existingMember } = await (supabase
+        .from('members') as any)
+        .select('id, email, payment_reference')
+        .or(`payment_reference.eq.${paymentRef},email.eq.${normalizedEmail}`)
+        .single();
+
+      if (existingMember) {
+        // Member already exists - verify it's the same transaction
+        if (existingMember.payment_reference === paymentRef) {
+          console.log(`Member ${normalizedEmail} already registered with payment reference ${paymentRef}`);
+        } else {
+          // Same email but different payment reference - update with new payment
+          const { error: updateError, data: updatedMember } = await (supabase
+            .from('members') as any)
+            .update({
+              name: finalName, // Update name in case it changed
+              payment_reference: paymentRef,
+              payment_amount: transaction.amount / 100,
+              payment_currency: transaction.currency || 'NGN',
+              payment_status: 'success',
+              membership_status: 'active',
+            })
+            .eq('email', normalizedEmail)
+            .select()
+            .single();
+
+          if (updateError) {
+            console.error('Failed to update existing member:', updateError);
+            throw new Error(`Database update failed: ${updateError.message}`);
+          }
+
+          if (!updatedMember) {
+            throw new Error('Member update returned no data');
+          }
+
+          console.log(`Updated existing member ${normalizedEmail} with new payment reference ${paymentRef}`);
+        }
+      } else {
+        // Insert new member
+        const { error: insertError, data: newMember } = await (supabase
           .from('members') as any)
           .insert({
-            name: String(name).trim(),
-            email: String(email).trim().toLowerCase(),
-            payment_reference: transaction.reference,
+            name: finalName,
+            email: normalizedEmail,
+            payment_reference: paymentRef,
             payment_amount: transaction.amount / 100, // Convert from kobo to Naira
             payment_currency: transaction.currency || 'NGN',
             payment_status: 'success',
             membership_status: 'active',
-          });
+          })
+          .select()
+          .single();
 
-        if (dbError) {
-          console.error('Failed to save member to database:', dbError);
-          // Continue even if database save fails - payment was successful
-        } else {
-          console.log(`Saved paid member: ${email}`);
+        if (insertError) {
+          console.error('Failed to save member to database:', insertError);
+          throw new Error(`Database insert failed: ${insertError.message}`);
         }
+
+        if (!newMember) {
+          throw new Error('Member insert returned no data - registration may have failed');
+        }
+
+        console.log(`Successfully registered new member: ${normalizedEmail} (ID: ${newMember.id})`);
       }
-    } catch (dbError) {
-      console.error('Database error:', dbError);
-      // Continue even if database fails - payment was successful
+    } catch (dbError: any) {
+      console.error('Database registration error:', dbError);
+      // Return error - member registration is critical
+      return NextResponse.json(
+        { 
+          error: 'Payment verified but member registration failed',
+          details: dbError.message || 'Unknown database error',
+          transaction: {
+            reference: transaction.reference,
+            email,
+            name,
+          }
+        },
+        { status: 500 }
+      );
     }
 
     // Add user to Slack community
