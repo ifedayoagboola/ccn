@@ -193,8 +193,9 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
 
   return (
     <header className="sticky top-0 z-50 border-b-2 border-border bg-white/95 backdrop-blur-sm">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-1 items-center gap-12">
+      <div className="mx-auto grid h-20 max-w-7xl grid-cols-3 items-center px-4 sm:px-6 lg:px-8">
+        {/* Logo - Left */}
+        <div className="flex items-center">
           <Link
             href="/"
             className="transition-opacity hover:opacity-80"
@@ -209,7 +210,10 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
           >
             <Logo height={72} />
           </Link>
+        </div>
 
+        {/* Navigation - Center */}
+        <div className="flex items-center justify-center">
           {user ? (
             <nav className="hidden md:flex gap-2">
               {LOGGED_IN_ITEMS.map((item) => (
@@ -232,7 +236,8 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
           )}
         </div>
 
-        <div className="flex items-center gap-3 md:gap-4">
+        {/* Button/Actions - Right */}
+        <div className="flex items-center justify-end gap-3 md:gap-4">
           {user ? (
             <>
               {isAdmin && (
