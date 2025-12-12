@@ -42,18 +42,10 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
   // For now, focus is on waitlist. This can be changed to 'community' or 'event' later
   const heroPromotion: HeroPromotionType = 'waitlist';
   const partners = [
-    { name: 'HealthBridge Clinics' },
-    { name: 'Nova Telehealth' },
-    { name: 'AfriCare University' },
-    { name: 'BrightLabs Health' },
-    { name: 'WellSpring HMO' },
-    { name: 'Digital Nurses Africa' },
     { name: 'Nodeshift', logoSrc: '/assets/nodeshift.jpeg' },
     { name: 'Sellexa', logoSrc: '/assets/sellexa-high-resolution-logo-transparent.png' },
     { name: 'BSIS', logoSrc: '/assets/bsis.avif' },
     { name: 'The Bull Squad', logoSrc: '/assets/thebullsquad.svg' },
-    { name: 'OpenCare Partners' },
-    { name: 'Africa MedTech Lab' },
   ];
 
   return (
