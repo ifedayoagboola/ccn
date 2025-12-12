@@ -171,7 +171,7 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
     }
 
     return (
-      <nav className="hidden items-center gap-x-4 md:flex md:flex-nowrap lg:gap-x-6">
+      <nav className="hidden items-center gap-x-3 md:flex md:flex-nowrap md:gap-x-4 lg:gap-x-6">
         {primaryItems.map(renderItem)}
         {overflowItems.length > 0 && (
           <DropdownMenu>
@@ -193,9 +193,9 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
 
   return (
     <header className="sticky top-0 z-50 border-b-2 border-border bg-white/95 backdrop-blur-sm">
-      <div className="mx-auto grid h-20 max-w-7xl grid-cols-3 items-center px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
         {/* Logo - Left */}
-        <div className="flex items-center">
+        <div className="flex flex-shrink-0 items-center">
           <Link
             href="/"
             className="transition-opacity hover:opacity-80"
@@ -208,20 +208,22 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
               }
             }}
           >
-            <Logo height={72} />
+            <Logo height={40} className="sm:hidden" />
+            <Logo height={56} className="hidden sm:block md:hidden" />
+            <Logo height={72} className="hidden md:block" />
           </Link>
         </div>
 
-        {/* Navigation - Center */}
-        <div className="flex items-center justify-center">
+        {/* Navigation - Center (hidden on mobile) */}
+        <div className="hidden flex-1 items-center justify-center md:flex">
           {user ? (
-            <nav className="hidden md:flex gap-2">
+            <nav className="flex gap-2">
               {LOGGED_IN_ITEMS.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => onNavigate?.(item.id)}
                   className={cn(
-                    'rounded-xl px-4 py-2 text-xs font-semibold transition-all sm:px-5 sm:py-2.5 sm:text-sm',
+                    'rounded-xl px-3 py-1.5 text-xs font-semibold transition-all sm:px-4 sm:py-2 sm:text-sm',
                     currentPage === item.id
                       ? 'bg-primary text-primary-foreground shadow-warm'
                       : 'text-muted-foreground hover:bg-muted hover:text-foreground'
@@ -237,7 +239,7 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
         </div>
 
         {/* Button/Actions - Right */}
-        <div className="flex items-center justify-end gap-3 md:gap-4">
+        <div className="flex flex-shrink-0 items-center justify-end gap-2 sm:gap-3 md:gap-4">
           {user ? (
             <>
               {isAdmin && (
@@ -298,12 +300,12 @@ export function Header({ user, currentPage, onNavigate, onLogout, isAdmin }: Hea
             <>
               <Button 
                 onClick={() => setPaymentModalOpen(true)}
-                className="hidden rounded-full bg-accent px-6 py-2 text-sm font-semibold text-accent-foreground hover:bg-accent/90 md:flex"
+                className="hidden rounded-full bg-accent px-4 py-1.5 text-xs font-semibold text-accent-foreground hover:bg-accent/90 sm:px-6 sm:py-2 sm:text-sm md:flex"
               >
                 Join movement
               </Button>
               <button
-                className="flex items-center justify-center rounded-full border border-border p-2 md:hidden"
+                className="flex items-center justify-center rounded-full border border-border p-2 transition-colors hover:bg-muted md:hidden"
                 aria-label="Toggle navigation"
                 onClick={() => setMobileOpen((prev) => !prev)}
               >
