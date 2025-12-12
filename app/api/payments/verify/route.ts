@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+import { Database } from '@/types/supabase';
 
 /**
  * API Route: Verify Paystack Payment
@@ -73,16 +75,57 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Store paid user in database
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    try {
+      if (supabaseUrl && supabaseKey) {
+        const supabase = createClient<Database>(supabaseUrl, supabaseKey);
+        
+        const { error: dbError } = await (supabase
+          .from('members') as any)
+          .insert({
+            name: String(name).trim(),
+            email: String(email).trim().toLowerCase(),
+            payment_reference: transaction.reference,
+            payment_amount: transaction.amount / 100, // Convert from kobo to Naira
+            payment_currency: transaction.currency || 'NGN',
+            payment_status: 'success',
+            membership_status: 'active',
+          });
+
+        if (dbError) {
+          console.error('Failed to save member to database:', dbError);
+          // Continue even if database save fails - payment was successful
+        } else {
+          console.log(`Saved paid member: ${email}`);
+        }
+      }
+    } catch (dbError) {
+      console.error('Database error:', dbError);
+      // Continue even if database fails - payment was successful
+    }
+
     // Add user to Slack community
     try {
       await addUserToSlack(email, name);
+      
+      // Update Slack invite status in database
+      if (supabaseUrl && supabaseKey) {
+        const supabase = createClient<Database>(supabaseUrl, supabaseKey);
+        await (supabase
+          .from('members') as any)
+          .update({
+            slack_invited: true,
+            slack_invite_sent_at: new Date().toISOString(),
+          })
+          .eq('email', email.toLowerCase());
+      }
     } catch (slackError) {
       console.error('Failed to add user to Slack:', slackError);
       // Continue even if Slack fails - payment was successful
     }
-
-    // Store payment record in database (optional - you can add Supabase integration here)
-    // await storePaymentRecord(transaction);
 
     return NextResponse.json({
       success: true,

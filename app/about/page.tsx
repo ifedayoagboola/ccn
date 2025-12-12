@@ -203,13 +203,6 @@ function CallToAction({ onJoinClick }: { onJoinClick: () => void }) {
             Join the movement
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
-          <Button
-            asChild
-            variant="outline"
-            className="rounded-full border-primary/30 px-7 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10"
-          >
-            <Link href="/community">See how the circle works</Link>
-          </Button>
         </div>
       </div>
     </section>
