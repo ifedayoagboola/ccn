@@ -14,8 +14,12 @@ const manrope = Manrope({
 })
 
 export const metadata: Metadata = {
-  title: 'CCN',
-  description: 'Next.js application with Tailwind, shadcn/ui, React Query, and Supabase',
+  title: 'Counter Cultural Nurses - Empowering African Nurses',
+  description: 'Empowering African nurses with digital skills, remote opportunities, and financial freedom. Join our community and soar beyond the bedside.',
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
