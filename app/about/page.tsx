@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Heart, Sparkles, Target, Users } from "lucide-react";
 
@@ -7,6 +8,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ImageWithFallback } from "@/components/figma/ImageWithFallback";
+import { CommunityJoinPaymentModal } from "@/components/modals/CommunityJoinPaymentModal";
 
 const VALUES = [
   {
@@ -16,7 +18,7 @@ const VALUES = [
   },
   {
     title: "Clear playbooks",
-    copy: "No fluff—just step-by-step programmes, templates, and critiques that show you exactly what to do next.",
+    copy: "No fluff - just step-by-step programmes, templates, and critiques that show you exactly what to do next.",
     icon: <Target className="h-5 w-5 text-primary" />,
   },
   {
@@ -32,14 +34,17 @@ const VALUES = [
 ];
 
 export default function AboutPage() {
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
       <Header currentPage="about" />
+      <CommunityJoinPaymentModal open={paymentModalOpen} onOpenChange={setPaymentModalOpen} />
       <main>
         <HeroSection />
         <StorySection />
         <ValuesSection />
-        <CallToAction />
+        <CallToAction onJoinClick={() => setPaymentModalOpen(true)} />
         <Footer />
       </main>
     </div>
@@ -110,7 +115,7 @@ function StorySection() {
               African nurses deserve peace of mind, good pay, and time for self and family.
             </h2>
             <p className="text-lg leading-relaxed text-foreground/75">
-              Many hardworking nurses feel stuck—long shifts, low pay, and few paths into better roles. CCN breaks everything into plain steps so you can learn new skills, practise with support, and grow without feeling lost or alone.
+              Many hardworking nurses feel stuck - long shifts, low pay, and few paths into better roles. CCN breaks everything into plain steps so you can learn new skills, practise with support, and grow without feeling lost or alone.
             </p>
             <div className="rounded-3xl border border-primary/12 bg-secondary/60 p-6 shadow-[0_24px_48px_-36px_rgba(41,18,15,0.45)]">
               <p className="text-lg italic text-foreground">
@@ -126,7 +131,7 @@ function StorySection() {
             <div className="rounded-2xl border border-primary/12 bg-primary/5 p-4">
               <p className="text-sm font-semibold text-primary">What started CCN</p>
               <p className="mt-2 text-sm leading-relaxed text-foreground/70">
-                Lillian watched brilliant nurses leave the profession out of frustration. CCN began as a simple circle to swap scripts, portfolios, and gig leads—now it&apos;s a full studio helping nurses transition into remote work.
+                Lillian watched brilliant nurses leave the profession out of frustration. CCN began as a simple circle to swap scripts, portfolios, and gig leads - now it&apos;s a full studio helping nurses transition into remote work.
               </p>
             </div>
 
@@ -181,7 +186,7 @@ function ValuesSection() {
   );
 }
 
-function CallToAction() {
+function CallToAction({ onJoinClick }: { onJoinClick: () => void }) {
   return (
     <section className="bg-white py-20">
       <div className="mx-auto flex max-w-5xl flex-col gap-6 rounded-[32px] border border-primary/12 bg-gradient-to-r from-primary/10 via-white to-secondary/10 px-8 py-10 text-center shadow-[0_32px_70px_-46px_rgba(41,18,15,0.5)] sm:px-12">
@@ -191,11 +196,12 @@ function CallToAction() {
           Step into a community that pairs structure with warmth. Programmes, mentors, and partners are ready to help you earn in calmer, more flexible ways.
         </p>
         <div className="flex flex-col justify-center gap-3 sm:flex-row sm:items-center">
-          <Button asChild className="rounded-full bg-primary px-7 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark">
-            <Link href="/join">
-              Join the movement
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
+          <Button 
+            onClick={onJoinClick}
+            className="rounded-full bg-primary px-7 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark"
+          >
+            Join the movement
+            <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
           <Button
             asChild

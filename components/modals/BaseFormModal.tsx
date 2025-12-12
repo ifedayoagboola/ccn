@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const baseFormSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
@@ -83,7 +84,9 @@ export function BaseFormModal({
               id="fullName"
               placeholder="Enter your full name"
               {...form.register("fullName")}
-              className={form.formState.errors.fullName ? "border-destructive" : ""}
+              className={cn(
+                form.formState.errors.fullName && "border-destructive"
+              )}
             />
             {form.formState.errors.fullName && (
               <p className="text-xs text-destructive">
@@ -98,7 +101,9 @@ export function BaseFormModal({
               type="email"
               placeholder="your.email@example.com"
               {...form.register("email")}
-              className={form.formState.errors.email ? "border-destructive" : ""}
+              className={cn(
+                form.formState.errors.email && "border-destructive"
+              )}
             />
             {form.formState.errors.email && (
               <p className="text-xs text-destructive">
@@ -112,7 +117,9 @@ export function BaseFormModal({
               id="country"
               placeholder="Select your country"
               {...form.register("country")}
-              className={form.formState.errors.country ? "border-destructive" : ""}
+              className={cn(
+                form.formState.errors.country && "border-destructive"
+              )}
             />
             {form.formState.errors.country && (
               <p className="text-xs text-destructive">

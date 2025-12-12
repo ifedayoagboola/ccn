@@ -16,7 +16,6 @@ import {
 
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import { NewsletterSection } from "@/components/NewsletterSection";
 import { Footer } from "@/components/Footer";
 import { EventJoinModal } from "@/components/modals/EventJoinModal";
 import { cn } from "@/lib/utils";
@@ -145,7 +144,6 @@ export default function EventsPage() {
         <UpcomingEvents onEventClick={handleEventClick} />
         <ReminderSection />
         <PastEvents />
-        <NewsletterSection variant="feature" />
         <Footer />
       </main>
     </div>
@@ -165,7 +163,7 @@ function HeroSection() {
               Three touchpoints to help you decide, prepare, and show up.
             </h1>
             <p className="text-lg leading-relaxed text-foreground/75">
-              Whether you are curious about the Portfolio Power-Up Challenge or exploring partner courses, join the session that matches your next move—and we will keep you updated along the way.
+              Whether you are curious about the Portfolio Power-Up Challenge or exploring partner courses, join the session that matches your next move - and we will keep you updated along the way.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
               <Button asChild className="w-full rounded-full bg-primary px-7 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark sm:w-auto">
@@ -322,7 +320,7 @@ function PastEvents() {
           <p className="text-xs uppercase tracking-[0.28em] text-accent-2/60">Catch up</p>
           <h2 className="text-4xl font-semibold text-foreground sm:text-[44px]">Watch replays and download session notes.</h2>
           <p className="mx-auto max-w-3xl text-base leading-relaxed text-foreground/70">
-            These recordings cover pricing, storytelling, partner interviews, and more—perfect if you want to learn on your own schedule.
+            These recordings cover pricing, storytelling, partner interviews, and more - perfect if you want to learn on your own schedule.
           </p>
         </div>
 

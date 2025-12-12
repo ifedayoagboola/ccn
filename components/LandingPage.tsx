@@ -9,6 +9,7 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { WaitlistModal } from './modals/WaitlistModal';
 import { CommunityJoinModal } from './modals/CommunityJoinModal';
 import { EventJoinModal } from './modals/EventJoinModal';
+import { CommunityJoinPaymentModal } from './modals/CommunityJoinPaymentModal';
 import { 
   Laptop, 
   Users, 
@@ -36,6 +37,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
   const [waitlistModalOpen, setWaitlistModalOpen] = useState(false);
   const [communityModalOpen, setCommunityModalOpen] = useState(false);
   const [eventModalOpen, setEventModalOpen] = useState(false);
+  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
   
   // For now, focus is on waitlist. This can be changed to 'community' or 'event' later
   const heroPromotion: HeroPromotionType = 'waitlist';
@@ -48,6 +50,8 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
     { name: 'Digital Nurses Africa' },
     { name: 'Nodeshift', logoSrc: '/assets/nodeshift.jpeg' },
     { name: 'Sellexa', logoSrc: '/assets/sellexa-high-resolution-logo-transparent.png' },
+    { name: 'BSIS', logoSrc: '/assets/bsis.avif' },
+    { name: 'The Bull Squad', logoSrc: '/assets/thebullsquad.svg' },
     { name: 'OpenCare Partners' },
     { name: 'Africa MedTech Lab' },
   ];
@@ -57,6 +61,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
       <WaitlistModal open={waitlistModalOpen} onOpenChange={setWaitlistModalOpen} />
       <CommunityJoinModal open={communityModalOpen} onOpenChange={setCommunityModalOpen} />
       <EventJoinModal open={eventModalOpen} onOpenChange={setEventModalOpen} />
+      <CommunityJoinPaymentModal open={paymentModalOpen} onOpenChange={setPaymentModalOpen} />
       {/* Hero Section */}
       <section id="home" className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/12 via-background to-secondary -z-10" />
@@ -83,7 +88,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
 
               <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
                 <Button
-                  onClick={() => setWaitlistModalOpen(true)}
+                  onClick={() => setPaymentModalOpen(true)}
                   size="lg"
                   className="h-14 rounded-full bg-primary px-8 text-base font-semibold tracking-wide text-primary-foreground shadow-[0_22px_40px_-24px_rgba(192,54,49,0.55)] hover:bg-primary-dark"
                 >
@@ -277,7 +282,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   },
                   {
                     title: 'Accountability pods',
-                    description: 'You&apos;re matched with peers pursuing similar goals—whether that&apos;s telehealth, health writing, or launching a digital product.',
+                    description: 'You&apos;re matched with peers pursuing similar goals - whether that&apos;s telehealth, health writing, or launching a digital product.',
                   },
                   {
                     title: 'Partner lab',
@@ -298,7 +303,7 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Button
                   className="h-12 rounded-full bg-primary px-6 text-sm font-semibold uppercase tracking-[0.2em] text-primary-foreground hover:bg-primary-dark"
-                  onClick={() => setCommunityModalOpen(true)}
+                  onClick={() => setPaymentModalOpen(true)}
                 >
                   Join the movement
                   <ArrowRight className="ml-2 h-4 w-4" />
