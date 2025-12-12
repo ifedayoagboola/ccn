@@ -41,7 +41,7 @@ export default function AboutPage() {
       <Header currentPage="about" />
       <CommunityJoinPaymentModal open={paymentModalOpen} onOpenChange={setPaymentModalOpen} />
       <main>
-        <HeroSection />
+        <HeroSection onJoinClick={() => setPaymentModalOpen(true)} />
         <StorySection />
         <ValuesSection />
         <CallToAction onJoinClick={() => setPaymentModalOpen(true)} />
@@ -51,7 +51,7 @@ export default function AboutPage() {
   );
 }
 
-function HeroSection() {
+function HeroSection({ onJoinClick }: { onJoinClick: () => void }) {
   return (
     <section className="bg-gradient-to-br from-primary/8 via-white to-secondary/10 py-24 sm:py-32">
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] lg:px-8">
@@ -68,11 +68,12 @@ function HeroSection() {
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button asChild className="rounded-full bg-primary px-7 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark">
-              <Link href="/join">
-                Join the movement
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+            <Button 
+              onClick={onJoinClick}
+              className="rounded-full bg-primary px-7 text-sm font-semibold uppercase tracking-[0.22em] text-primary-foreground hover:bg-primary-dark"
+            >
+              Join the movement
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button
               asChild
