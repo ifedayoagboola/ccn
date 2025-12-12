@@ -308,13 +308,6 @@ export function LandingPage({ onJoinClick, onNavigate }: LandingPageProps) {
                   Join the movement
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Button
-                  variant="outline"
-                  className="h-12 rounded-full border-primary/25 px-6 text-sm font-semibold uppercase tracking-[0.2em] text-primary hover:border-primary hover:bg-primary/10"
-                  asChild
-                >
-                  <Link href="/events">See weekly schedule</Link>
-                </Button>
               </div>
             </div>
 

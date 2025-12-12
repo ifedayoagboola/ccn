@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
+import { createClient } from '@supabase/supabase-js';
+import { Database } from '@/types/supabase';
 
 /**
  * API Route: Paystack Webhook Handler
@@ -84,8 +86,51 @@ async function handleSuccessfulPayment(data: any) {
     return;
   }
 
+  // Store paid user in database
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  try {
+    if (supabaseUrl && supabaseKey) {
+      const supabase = createClient<Database>(supabaseUrl, supabaseKey);
+      
+      const { error: dbError } = await (supabase
+        .from('members') as any)
+        .insert({
+          name: String(name).trim(),
+          email: String(email).trim().toLowerCase(),
+          payment_reference: data.reference,
+          payment_amount: data.amount / 100, // Convert from kobo to Naira
+          payment_currency: data.currency || 'NGN',
+          payment_status: 'success',
+          membership_status: 'active',
+        });
+
+      if (dbError) {
+        console.error('Failed to save member to database:', dbError);
+      } else {
+        console.log(`Saved paid member from webhook: ${email}`);
+      }
+    }
+  } catch (dbError) {
+    console.error('Database error in webhook:', dbError);
+  }
+
   try {
     await addUserToSlack(email, name);
+    
+    // Update Slack invite status
+    if (supabaseUrl && supabaseKey) {
+      const supabase = createClient<Database>(supabaseUrl, supabaseKey);
+      await (supabase
+        .from('members') as any)
+        .update({
+          slack_invited: true,
+          slack_invite_sent_at: new Date().toISOString(),
+        })
+        .eq('email', email.toLowerCase());
+    }
+    
     console.log(`Successfully processed payment for ${email}`);
   } catch (error) {
     console.error('Failed to process successful payment:', error);

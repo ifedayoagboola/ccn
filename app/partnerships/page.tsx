@@ -1,10 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -13,46 +9,118 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-const partnershipSchema = z.object({
-  name: z.string().min(1, "Please enter your full name").min(2, "Name must be at least 2 characters"),
-  email: z.string().min(1, "Email is required").email("Enter a valid email address"),
-  organisation: z.string().min(1, "Please enter your organisation name").min(2, "Organisation name must be at least 2 characters"),
-  need: z.string().min(1, "Please describe what you need").min(10, "Please describe what you need (at least 10 characters)"),
-});
+interface FormData {
+  name: string;
+  email: string;
+  organisation: string;
+  need: string;
+}
 
-type PartnershipFormValues = z.infer<typeof partnershipSchema>;
-
-const defaultFormValues: PartnershipFormValues = {
-  name: "",
-  email: "",
-  organisation: "",
-  need: "",
-};
+interface FormErrors {
+  name?: string;
+  email?: string;
+  organisation?: string;
+  need?: string;
+}
 
 export default function PartnershipsPage() {
   const [submitted, setSubmitted] = useState(false);
-
-  const form = useForm<PartnershipFormValues>({
-    resolver: zodResolver(partnershipSchema),
-    defaultValues: defaultFormValues,
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    organisation: "",
+    need: "",
   });
+  const [errors, setErrors] = useState<FormErrors>({});
 
-  const mutation = useMutation<PartnershipFormValues, Error, PartnershipFormValues>({
-    mutationFn: async (values) => {
-      // TODO: Connect to backend API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      return values;
-    },
-    onSuccess: () => {
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.name || formData.name.trim().length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
+    }
+
+    if (!formData.email || !formData.email.includes("@")) {
+      newErrors.email = "Enter a valid email address";
+    }
+
+    if (!formData.organisation || formData.organisation.trim().length < 2) {
+      newErrors.organisation = "Organisation name must be at least 2 characters";
+    }
+
+    if (!formData.need || formData.need.trim().length < 10) {
+      newErrors.need = "Description must be at least 10 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (field: keyof FormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear error for this field when user starts typing
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+    setError(null);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/partnerships/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim().toLowerCase(),
+          organisation: formData.organisation.trim(),
+          need: formData.need.trim(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Show more detailed error message
+        const errorMsg = data.error || "Failed to submit partnership request";
+        console.error('API Error:', {
+          status: response.status,
+          error: data.error,
+          code: data.code,
+          details: data.details,
+        });
+        throw new Error(errorMsg);
+      }
+
+      // Success
       setSubmitted(true);
-      form.reset(defaultFormValues);
-      setTimeout(() => setSubmitted(false), 4000);
-    },
-  });
-
-  const handleSubmit = form.handleSubmit(async (values) => {
-    await mutation.mutateAsync(values);
-  });
+      setFormData({
+        name: "",
+        email: "",
+        organisation: "",
+        need: "",
+      });
+      setErrors({});
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -78,15 +146,13 @@ export default function PartnershipsPage() {
                     <Input
                       id="name"
                       placeholder="Enter your full name"
-                      className={cn(
-                        form.formState.errors.name && "border-destructive"
-                      )}
-                      {...form.register("name")}
+                      value={formData.name}
+                      onChange={(e) => handleChange("name", e.target.value)}
+                      className={cn(errors.name && "border-destructive")}
+                      disabled={loading}
                     />
-                    {form.formState.errors.name && (
-                      <p className="text-xs text-destructive">
-                        {form.formState.errors.name.message}
-                      </p>
+                    {errors.name && (
+                      <p className="text-xs text-destructive">{errors.name}</p>
                     )}
                   </div>
 
@@ -97,15 +163,13 @@ export default function PartnershipsPage() {
                         id="email"
                         type="email"
                         placeholder="you@company.com"
-                        className={cn(
-                          form.formState.errors.email && "border-destructive"
-                        )}
-                        {...form.register("email")}
+                        value={formData.email}
+                        onChange={(e) => handleChange("email", e.target.value)}
+                        className={cn(errors.email && "border-destructive")}
+                        disabled={loading}
                       />
-                      {form.formState.errors.email && (
-                        <p className="text-xs text-destructive">
-                          {form.formState.errors.email.message}
-                        </p>
+                      {errors.email && (
+                        <p className="text-xs text-destructive">{errors.email}</p>
                       )}
                     </div>
                     <div className="grid gap-2">
@@ -113,15 +177,13 @@ export default function PartnershipsPage() {
                       <Input
                         id="organisation"
                         placeholder="Company or hospital name"
-                        className={cn(
-                          form.formState.errors.organisation && "border-destructive"
-                        )}
-                        {...form.register("organisation")}
+                        value={formData.organisation}
+                        onChange={(e) => handleChange("organisation", e.target.value)}
+                        className={cn(errors.organisation && "border-destructive")}
+                        disabled={loading}
                       />
-                      {form.formState.errors.organisation && (
-                        <p className="text-xs text-destructive">
-                          {form.formState.errors.organisation.message}
-                        </p>
+                      {errors.organisation && (
+                        <p className="text-xs text-destructive">{errors.organisation}</p>
                       )}
                     </div>
                   </div>
@@ -131,25 +193,28 @@ export default function PartnershipsPage() {
                     <Textarea
                       id="need"
                       placeholder="Briefly describe the partnership or roles you have in mind."
-                      className={cn(
-                        "min-h-[120px]",
-                        form.formState.errors.need && "border-destructive"
-                      )}
-                      {...form.register("need")}
+                      value={formData.need}
+                      onChange={(e) => handleChange("need", e.target.value)}
+                      className={cn("min-h-[120px]", errors.need && "border-destructive")}
+                      disabled={loading}
                     />
-                    {form.formState.errors.need && (
-                      <p className="text-xs text-destructive">
-                        {form.formState.errors.need.message}
-                      </p>
+                    {errors.need && (
+                      <p className="text-xs text-destructive">{errors.need}</p>
                     )}
                   </div>
+
+                  {error && (
+                    <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4">
+                      <p className="text-sm font-semibold text-destructive">{error}</p>
+                    </div>
+                  )}
 
                   <Button
                     type="submit"
                     className="h-12 rounded-full bg-primary text-primary-foreground hover:bg-primary-dark"
-                    disabled={mutation.isPending}
+                    disabled={loading}
                   >
-                    {mutation.isPending ? (
+                    {loading ? (
                       <span className="flex items-center gap-2">
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                         Sending...
